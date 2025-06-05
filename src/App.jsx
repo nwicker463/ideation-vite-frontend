@@ -41,7 +41,7 @@ export default function IdeationGame() {
     const fullContent = phrase ? `${phrase} ${content}` : content;
 
     // POST request to server with the new idea data
-    await fetch('/api/ideas', {
+    await fetch(`${import.meta.env.VITE_API_URL}/api/ideas`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ parentId, content: fullContent }),
@@ -53,7 +53,7 @@ export default function IdeationGame() {
     setParentId(null);
 
     // Refresh ideas from the server to reflect the new submission
-    const updated = await fetch('/api/ideas').then(res => res.json());
+    const updated = await fetch(`${import.meta.env.VITE_API_URL}/api/ideas`).then(res => res.json());
     setIdeas(updated);
   };
 
