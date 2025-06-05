@@ -30,7 +30,7 @@ export default function IdeationGame() {
 
   // Fetch existing ideas from backend API on component mount
   useEffect(() => {
-    fetch('/api/ideas')
+    fetch(`${import.meta.env.VITE_API_URL}/api/ideas`)
       .then(res => res.json())
       .then(data => setIdeas(data));
   }, []);
