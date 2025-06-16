@@ -9,7 +9,7 @@ import { Textarea } from './components/ui/textarea.jsx';
 import { Label } from './components/ui/label.jsx';
 
 // State variable for groupId
-//const [groupId, setGroupId] = useState(null);
+const [groupId, setGroupId] = useState(null);
 
 
 // List of conjunctive phrases for linking ideas
@@ -41,7 +41,7 @@ export default function IdeationGame() {
     .catch(err => console.error("Failed to fetch group ideas:", err));
 }, [groupId]);
 
-  /* const createGroup = async () => {
+  const createGroup = async () => {
   const name = prompt('Enter new group name:');
   if (!name) return;
 
@@ -58,7 +58,6 @@ export default function IdeationGame() {
     alert('Something went wrong while creating the group.');
   } 
   };
-  */
 
 
   // Submit a new idea to the server
@@ -113,9 +112,9 @@ export default function IdeationGame() {
       <h1 className="text-2xl font-bold mb-4">Ideation Game</h1>
       <h2 className="text-2xl font-bold mb-4">Come up with an idea!</h2>
 
-      {/*<Button className="mb-4" onClick={createGroup}>
+      <Button className="mb-4" onClick={createGroup}>
         Create New Group
-      </Button>*/}
+      </Button>
 
       {/* Form to submit a new idea */}
       <div className="space-y-4 mb-6">
@@ -140,7 +139,7 @@ export default function IdeationGame() {
         <Button onClick={submitIdea}>Submit Idea</Button>
       </div>
 
-      {/* <div className="mb-4">
+      <div className="mb-4">
         <Label>Select Group ID</Label>
         <Input
           type="number"
@@ -149,7 +148,6 @@ export default function IdeationGame() {
           placeholder="Enter a group ID..."
         />
       </div>
-      */}
 
       {/* Render the idea tree */}
       <div>
