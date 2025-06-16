@@ -56,8 +56,8 @@ export default function IdeationGame() {
   } catch (err) {
     console.error('Failed to create group:', err);
     alert('Something went wrong while creating the group.');
-  }
-};
+  } 
+  };
 
 
   // Submit a new idea to the server
