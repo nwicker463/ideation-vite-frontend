@@ -9,7 +9,7 @@ import { Textarea } from './components/ui/textarea.jsx';
 import { Label } from './components/ui/label.jsx';
 
 // State variable for groupId
-const [groupId, setGroupId] = useState(null);
+//const [groupId, setGroupId] = useState(null);
 
 
 // List of conjunctive phrases for linking ideas
@@ -113,9 +113,9 @@ export default function IdeationGame() {
       <h1 className="text-2xl font-bold mb-4">Ideation Game</h1>
       <h2 className="text-2xl font-bold mb-4">Come up with an idea!</h2>
 
-      <Button className="mb-4" onClick={createGroup}>
+      {/*<Button className="mb-4" onClick={createGroup}>
         Create New Group
-      </Button>
+      </Button>*/}
 
       {/* Form to submit a new idea */}
       <div className="space-y-4 mb-6">
