@@ -41,7 +41,7 @@ export default function IdeationGame() {
     .catch(err => console.error("Failed to fetch group ideas:", err));
 }, [groupId]);
 
-  const createGroup = async () => {
+  /* const createGroup = async () => {
   const name = prompt('Enter new group name:');
   if (!name) return;
 
@@ -58,6 +58,7 @@ export default function IdeationGame() {
     alert('Something went wrong while creating the group.');
   } 
   };
+  */
 
 
   // Submit a new idea to the server
@@ -139,7 +140,7 @@ export default function IdeationGame() {
         <Button onClick={submitIdea}>Submit Idea</Button>
       </div>
 
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <Label>Select Group ID</Label>
         <Input
           type="number"
@@ -148,6 +149,7 @@ export default function IdeationGame() {
           placeholder="Enter a group ID..."
         />
       </div>
+      */}
 
       {/* Render the idea tree */}
       <div>
