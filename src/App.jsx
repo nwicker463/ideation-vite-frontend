@@ -59,7 +59,7 @@ export default function IdeationGame() {
     return ideas
       .filter(idea => idea.parent_id === parentId)
       .map(idea => (
-        <div key={idea.id} className={`ml-[${level * 1.5}rem] mb-2`}>
+        <div key={idea.id} style={{ marginLeft: `${level * 20}px` }} className="mb-2">
           <Card>
             <CardContent>
               <p>{idea.content}</p>
