@@ -59,15 +59,18 @@ export default function IdeationGame() {
     return ideas
       .filter(idea => idea.parent_id === parentId)
       .map(idea => (
-        <div key={idea.id} style={{ marginLeft: `${level * 20}px` }} className="mb-2">
-          <Card>
-            <CardContent>
-              <p>{idea.content}</p>
-              <Button size="sm" onClick={() => setParentId(idea.id)}>
-                Build on this idea
-              </Button>
-            </CardContent>
-          </Card>
+        <div key={idea.id} className="mb-2">
+          <div style={{ marginLeft: `${level * 20}px` }}>
+            <Card>
+              <CardContent>
+                <p>{idea.content}</p>
+                <Button size="sm" onClick={() => setParentId(idea.id)}>
+                  Build on this idea
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+          {/* Render children */}
           {renderTree(idea.id, level + 1)}
         </div>
       ));
