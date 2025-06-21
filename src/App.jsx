@@ -14,22 +14,31 @@ const conjunctivePhrases = [
 ];
 
 export default function IdeationGame() {
+  const [groupId, setGroupId] = useState(null);
   const [ideas, setIdeas] = useState([]);
   const [parentId, setParentId] = useState(null);
   const [content, setContent] = useState('');
   const [phrase, setPhrase] = useState('');
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/ideas`)
+    if (!groupId) return;
+
+    fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${groupId}`)
       .then(res => res.json())
       .then(data => setIdeas(data))
-      .catch(err => console.error('Failed to fetch ideas:', err));
-  }, []);
+      .catch(err => console.error("Failed to fetch group ideas:", err));
+  }, [groupId]);
+
 
   const submitIdea = async () => {
+    if (!groupId) {
+      alert('Please select or create a group first.');
+      return;
+    }
+
     const fullContent = phrase ? `${phrase} ${content}` : content;
 
-    await fetch(`${import.meta.env.VITE_API_URL}/api/ideas`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${groupId}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ parentId, content: fullContent }),
@@ -39,10 +48,12 @@ export default function IdeationGame() {
     setPhrase('');
     setParentId(null);
 
-    const updated = await fetch(`${import.meta.env.VITE_API_URL}/api/ideas`)
+    const updated = await fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${groupId}`)
       .then(res => res.json());
+
     setIdeas(updated);
   };
+
 
   const renderTree = (parentId = null, level = 0) => {
     return ideas
@@ -62,9 +73,41 @@ export default function IdeationGame() {
       ));
   };
 
+  const createGroup = async () => {
+    const name = prompt("Enter a name for the new group:");
+    if (!name) return;
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/groups`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name }),
+      });
+
+      const newGroup = await res.json();
+      setGroupId(newGroup.id); // Switch to new group
+    } catch (err) {
+      console.error('Failed to create group:', err);
+      alert('Group creation failed.');
+    }
+  };
+
+
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Ideation Game</h1>
+
+      <div className="mb-4 space-y-2">
+        <Label>Select Group ID</Label>
+        <Input
+          type="number"
+          value={groupId || ''}
+          onChange={e => setGroupId(Number(e.target.value))}
+          placeholder="Enter a group ID"
+        />
+
+        <Button onClick={createGroup}>Create New Group</Button>
+      </div>
 
       <div className="space-y-4 mb-6">
         <Label>Conjunctive Phrase</Label>
