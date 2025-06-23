@@ -61,18 +61,11 @@ export default function IdeationGame() {
     return ideas
       .filter(idea => idea.parent_id === parentId)
       .map(idea => (
-        <div key={idea.id} className="mb-2">
-          <div style={{ marginLeft: `${level * 20}px` }}>
-            <Card>
-              <CardContent>
-                <p>{idea.content}</p>
-                <Button size="sm" onClick={() => setParentId(idea.id)}>
-                  Build on this idea
-                </Button>
-              </CardContent>
-            </Card>
+        <div key={idea.id} className="child-indent" style={{ marginLeft: `${level * 20}px` }}>
+          <div className="idea-card">
+            <p>{idea.content}</p>
+            <button onClick={() => setParentId(idea.id)}>Build on this idea</button>
           </div>
-          {/* Render children */}
           {renderTree(idea.id, level + 1)}
         </div>
       ));
@@ -99,7 +92,7 @@ export default function IdeationGame() {
 
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <div className="app-container">
       <h1 className="text-3xl font-bold text-gray-800 mb-4">Ideation Game</h1>
 
       <div className="mb-4 space-y-2">
@@ -116,7 +109,7 @@ export default function IdeationGame() {
         <Button onClick={createGroup}>Create New Group</Button>
       </div>
 
-      <div className="space-y-4 mb-6">
+      <div className="input-group">
         <Label>Conjunctive Phrase</Label>
         <select
           value={phrase}
