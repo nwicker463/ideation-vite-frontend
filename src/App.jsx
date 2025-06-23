@@ -93,48 +93,55 @@ export default function IdeationGame() {
 
   return (
     <div className="app-container">
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">Ideation Game</h1>
+    <h1>Ideation Game</h1>
 
-      <div className="mb-4 space-y-2">
-        <Label>Select Group ID</Label>
-        <Input
-          type="number"
-          value={groupId || ''}
-          onChange={e => setGroupId(Number(e.target.value))}
-          placeholder="Enter a group ID"
-        />
-      </div>
-
-      <div className="newGroupButton">
-        <Button onClick={createGroup}>Create New Group</Button>
-      </div>
-
-      <div className="input-group">
-        <Label>Conjunctive Phrase</Label>
-        <select
-          value={phrase}
-          onChange={e => setPhrase(e.target.value)}
-          className="w-full border rounded p-2"
-        >
-          {conjunctivePhrases.map(p => (
-            <option key={p} value={p}>{p || '[None]'}</option>
-          ))}
-        </select>
-
-        <Label>Your Idea</Label>
-        <Textarea
-          value={content}
-          onChange={e => setContent(e.target.value)}
-          placeholder="Enter your idea..."
-        />
-
-        <Button onClick={submitIdea}>Submit Idea</Button>
-      </div>
-
-      <div>
-        <h2 className="text-xl font-semibold text-gray-700 mt-8 mb-2">Idea Tree</h2>
+    <div className="content-grid">
+      {/* Left Column: Idea Tree */}
+      <div className="idea-tree">
+        <h2>Idea Tree</h2>
         {renderTree()}
       </div>
+
+      {/* Right Column: Form */}
+      <div className="idea-form">
+        <h2>Add a New Idea</h2>
+
+        <div className="mb-4 space-y-2">
+          <Label>Select Group ID</Label>
+          <Input
+            type="number"
+            value={groupId || ''}
+            onChange={e => setGroupId(Number(e.target.value))}
+            placeholder="Enter a group ID"
+          />
+        </div>
+
+        <div className="newGroupButton">
+          <Button onClick={createGroup}>Create New Group</Button>
+        </div>
+
+        <div className="input-group">
+          <label>Conjunctive Phrase</label>
+          <select value={phrase} onChange={e => setPhrase(e.target.value)}>
+            {conjunctivePhrases.map(p => (
+              <option key={p} value={p}>{p || '[None]'}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="input-group">
+          <label>Your Idea</label>
+          <textarea
+            value={content}
+            onChange={e => setContent(e.target.value)}
+            placeholder="Enter your idea..."
+          />
+        </div>
+
+        <button onClick={submitIdea}>Submit Idea</button>
+      </div>
     </div>
+  </div>
+
   );
 }

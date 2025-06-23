@@ -113,3 +113,33 @@ button:hover {
 .child-indent {
   margin-left: 20px;
 }
+
+.content-grid {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.idea-tree {
+  flex: 2;
+  min-width: 0;
+}
+
+.idea-form {
+  flex: 1;
+  min-width: 250px;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+  .content-grid {
+    flex-direction: column;
+  }
+
+  .idea-form {
+    margin-top: 1.5rem;
+  }
+}
