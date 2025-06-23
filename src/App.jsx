@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import './App.css';
+
 
 const conjunctivePhrases = [
   '',
@@ -98,7 +100,7 @@ export default function IdeationGame() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Ideation Game</h1>
+      <h1 className="text-3xl font-bold text-gray-800 mb-4">Ideation Game</h1>
 
       <div className="mb-4 space-y-2">
         <Label>Select Group ID</Label>
@@ -108,7 +110,9 @@ export default function IdeationGame() {
           onChange={e => setGroupId(Number(e.target.value))}
           placeholder="Enter a group ID"
         />
+      </div>
 
+      <div className="newGroupButton">
         <Button onClick={createGroup}>Create New Group</Button>
       </div>
 
@@ -135,7 +139,7 @@ export default function IdeationGame() {
       </div>
 
       <div>
-        <h2 className="text-xl font-semibold mb-2">Idea Tree</h2>
+        <h2 className="text-xl font-semibold text-gray-700 mt-8 mb-2">Idea Tree</h2>
         {renderTree()}
       </div>
     </div>
