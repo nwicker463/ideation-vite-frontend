@@ -141,9 +141,9 @@ export default function IdeationGame() {
           />
         </div>
 
-        <div className="newGroupButton">
+        {/*<div className="newGroupButton">
           <Button onClick={createGroup}>Create New Group</Button>
-        </div>
+        </div>*/}
 
         <Button onClick={createGroup}>Create New Group</Button>
 
