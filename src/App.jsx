@@ -102,6 +102,28 @@ export default function IdeationGame() {
     localStorage.setItem('collapsedNodes', JSON.stringify(collapsedNodes));
   }, [collapsedNodes]);
 
+  useEffect(() => {
+    const savedPhrase = localStorage.getItem('phrase');
+    if (savedPhrase !== null) {
+      setPhrase(savedPhrase);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('phrase', phrase);
+  }, [phrase]);
+
+  useEffect(() => {
+    const savedIdea = localStorage.getItem('ideaContent');
+    if (savedIdea !== null) {
+      setContent(savedIdea);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('ideaContent', content);
+  }, [content]);
+
   const renderTree = (parentId = null, level = 0) => {
     return ideas
       .filter(idea => idea.parent_id === parentId)
