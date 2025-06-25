@@ -71,6 +71,8 @@ export default function IdeationGame() {
 
     setContent('');
     setPhrase('');
+    localStorage.removeItem('ideaContent');
+    localStorage.removeItem('phrase');
     setParentId(null);
 
     const updated = await fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${groupId}`)
@@ -114,9 +116,9 @@ export default function IdeationGame() {
   }, [phrase]);
 
   useEffect(() => {
-    const savedIdea = localStorage.getItem('ideaContent');
-    if (savedIdea !== null) {
-      setContent(savedIdea);
+    const savedContent = localStorage.getItem('ideaContent');
+    if (savedContent !== null) {
+      setContent(savedContent);
     }
   }, []);
 
