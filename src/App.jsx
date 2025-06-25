@@ -21,6 +21,8 @@ export default function IdeationGame() {
   const [parentId, setParentId] = useState(null);
   const [content, setContent] = useState('');
   const [phrase, setPhrase] = useState('');
+  const [collapsedNodes, setCollapsedNodes] = useState({});
+
 
   useEffect(() => {
     if (!groupId) return;
@@ -56,20 +58,43 @@ export default function IdeationGame() {
     setIdeas(updated);
   };
 
+  const toggleCollapse = (id) => {
+    setCollapsedNodes(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
 
   const renderTree = (parentId = null, level = 0) => {
     return ideas
       .filter(idea => idea.parent_id === parentId)
-      .map(idea => (
-        <div key={idea.id} className="child-indent" style={{ marginLeft: `${level * 20}px` }}>
-          <div className="idea-card">
-            <p>{idea.content}</p>
-            <button onClick={() => setParentId(idea.id)}>Build on this idea</button>
+      .map(idea => {
+        const isCollapsed = collapsedNodes[idea.id];
+
+        return (
+          <div key={idea.id} className="child-indent" style={{ marginLeft: `${level * 20}px` }}>
+            <div className="idea-card">
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <p style={{ margin: 0 }}>
+                  <span
+                    style={{ cursor: 'pointer', marginRight: '8px', userSelect: 'none' }}
+                    onClick={() => toggleCollapse(idea.id)}
+                  >
+                    {isCollapsed ? '▶' : '▼'}
+                  </span>
+                  {idea.content}
+                </p>
+                <button onClick={() => setParentId(idea.id)}>Build</button>
+              </div>
+            </div>
+
+            {!isCollapsed && renderTree(idea.id, level + 1)}
           </div>
-          {renderTree(idea.id, level + 1)}
-        </div>
-      ));
+        );
+      });
   };
+
 
   const createGroup = async () => {
     const name = prompt("Enter a name for the new group:");

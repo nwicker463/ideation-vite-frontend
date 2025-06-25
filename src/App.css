@@ -143,3 +143,12 @@ button:hover {
     margin-top: 1.5rem;
   }
 }
+
+.idea-card button {
+  margin-left: 1rem;
+  font-size: 0.8rem;
+}
+
+.idea-card span:hover {
+  color: #007bff;
+}
