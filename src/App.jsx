@@ -145,7 +145,7 @@ export default function IdeationGame() {
           <Button onClick={createGroup}>Create New Group</Button>
         </div>*/}
 
-        <Button onClick={createGroup}>Create New Group</Button>
+        <button onClick={createGroup}>Create New Group</button>
 
         <div className="input-group">
           <label>Conjunctive Phrase</label>
