@@ -145,6 +145,8 @@ export default function IdeationGame() {
           <Button onClick={createGroup}>Create New Group</Button>
         </div>
 
+        <Button onClick={createGroup}>Create New Group</Button>
+
         <div className="input-group">
           <label>Conjunctive Phrase</label>
           <select value={phrase} onChange={e => setPhrase(e.target.value)}>
