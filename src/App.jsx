@@ -23,6 +23,27 @@ export default function IdeationGame() {
   const [phrase, setPhrase] = useState('');
   const [collapsedNodes, setCollapsedNodes] = useState({});
 
+  /* -------------------------------------------
+    Load a saved groupId (if present) exactly
+    once when the component first mounts.
+  --------------------------------------------*/
+  useEffect(() => {
+    const saved = localStorage.getItem('groupId');
+    if (saved) {
+      setGroupId(Number(saved));
+    }
+  }, []);
+
+  /* -------------------------------------------
+    Whenever groupId changes, persist it.
+  --------------------------------------------*/
+  useEffect(() => {
+    if (groupId !== null) {
+      localStorage.setItem('groupId', groupId);
+    } else {
+      localStorage.removeItem('groupId');   // Optional: clear when null
+    }
+  }, [groupId]);
 
   useEffect(() => {
     if (!groupId) return;
@@ -65,6 +86,21 @@ export default function IdeationGame() {
     }));
   };
 
+  // Load collapsed state from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('collapsedNodes');
+    if (saved) {
+      try {
+        setCollapsedNodes(JSON.parse(saved));
+      } catch (e) {
+        console.warn("Couldn't parse saved collapsed nodes:", e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('collapsedNodes', JSON.stringify(collapsedNodes));
+  }, [collapsedNodes]);
 
   const renderTree = (parentId = null, level = 0) => {
     return ideas
