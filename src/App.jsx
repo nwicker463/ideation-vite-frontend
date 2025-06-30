@@ -45,14 +45,26 @@ export default function IdeationGame() {
     }
   }, [groupId]);
 
-  useEffect(() => {
-    if (!groupId) return;
+useEffect(() => {
+  if (!groupId) return;
 
+  const fetchIdeas = () => {
     fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${groupId}`)
       .then(res => res.json())
       .then(data => setIdeas(data))
       .catch(err => console.error("Failed to fetch group ideas:", err));
-  }, [groupId]);
+  };
+
+  // Initial fetch
+  fetchIdeas();
+
+  // Poll every 5 seconds
+  const interval = setInterval(fetchIdeas, 5000);
+
+  // Cleanup on group change or unmount
+  return () => clearInterval(interval);
+}, [groupId]);
+
 
 
   const submitIdea = async () => {
