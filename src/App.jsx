@@ -156,6 +156,36 @@ export default function IdeationGame() {
     localStorage.setItem('ideaContent', content);
   }, [content]);
 
+  const [messages, setMessages] = useState([]);
+  const [chatInput, setChatInput] = useState('');
+
+  // Poll messages every 3s
+  useEffect(() => {
+    if (!groupId) return;
+    const fetchMessages = () =>
+      fetch(`${import.meta.env.VITE_API_URL}/api/messages/group/${groupId}`)
+        .then(res => res.json())
+        .then(setMessages)
+        .catch(err => console.error('Chat error:', err));
+
+    fetchMessages();
+    const interval = setInterval(fetchMessages, 3000);
+    return () => clearInterval(interval);
+  }, [groupId]);
+
+  const sendMessage = async () => {
+    if (!chatInput.trim() || !username || !groupId) return;
+
+    await fetch(`${import.meta.env.VITE_API_URL}/api/messages/group/${groupId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, content: chatInput }),
+    });
+
+    setChatInput('');
+  };
+
+
   const renderTree = (parentId = null, level = 0) => {
     return ideas
       .filter(idea => idea.parent_id === parentId)
@@ -228,7 +258,7 @@ export default function IdeationGame() {
         {renderTree()}
       </div>
 
-      {/* Right Column: Form */}
+      {/* Middle Column: Form */}
       <div className="idea-form">
         <h2>Add a New Idea</h2>
 
@@ -267,6 +297,21 @@ export default function IdeationGame() {
         </div>
 
         <button onClick={submitIdea}>Submit Idea</button>
+      </div>
+
+      <div className="chat-box">
+        <h2>Group Chat</h2>
+        <div className="chat-messages">
+          {messages.map(msg => (
+            <p key={msg.id}><strong>{msg.username}:</strong> {msg.content}</p>
+          ))}
+        </div>
+        <textarea
+          value={chatInput}
+          onChange={e => setChatInput(e.target.value)}
+          placeholder="Type a message..."
+        />
+        <button onClick={sendMessage}>Send</button>
       </div>
     </div>
   </div>
