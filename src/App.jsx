@@ -22,6 +22,20 @@ export default function IdeationGame() {
   const [content, setContent] = useState('');
   const [phrase, setPhrase] = useState('');
   const [collapsedNodes, setCollapsedNodes] = useState({});
+  const [username, setUsername] = useState('');
+
+  // Load saved username on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('username');
+    if (saved) setUsername(saved);
+  }, []);
+
+  // Save username on change
+  useEffect(() => {
+    if (username) {
+      localStorage.setItem('username', username);
+    }
+  }, [username]);
 
   /* -------------------------------------------
     Load a saved groupId (if present) exactly
@@ -45,25 +59,25 @@ export default function IdeationGame() {
     }
   }, [groupId]);
 
-useEffect(() => {
-  if (!groupId) return;
+  useEffect(() => {
+    if (!groupId) return;
 
-  const fetchIdeas = () => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${groupId}`)
-      .then(res => res.json())
-      .then(data => setIdeas(data))
-      .catch(err => console.error("Failed to fetch group ideas:", err));
-  };
+    const fetchIdeas = () => {
+      fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${groupId}`)
+        .then(res => res.json())
+        .then(data => setIdeas(data))
+        .catch(err => console.error("Failed to fetch group ideas:", err));
+    };
 
-  // Initial fetch
-  fetchIdeas();
+    // Initial fetch
+    fetchIdeas();
 
-  // Poll every 5 seconds
-  const interval = setInterval(fetchIdeas, 5000);
+    // Poll every 5 seconds
+    const interval = setInterval(fetchIdeas, 5000);
 
-  // Cleanup on group change or unmount
-  return () => clearInterval(interval);
-}, [groupId]);
+    // Cleanup on group change or unmount
+    return () => clearInterval(interval);
+  }, [groupId]);
 
 
 
@@ -78,7 +92,11 @@ useEffect(() => {
     await fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${groupId}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ parentId, content: fullContent }),
+      body: JSON.stringify({
+        parentId,
+        content: fullContent,
+        username,
+      }),
     });
 
     setContent('');
@@ -191,6 +209,17 @@ useEffect(() => {
   return (
     <div className="app-container">
     <h1>Ideation Game</h1>
+
+    <div className="input-group">
+      <label>Your Name</label>
+      <input
+        type="text"
+        value={username}
+        onChange={e => setUsername(e.target.value)}
+        placeholder="Enter your name"
+      />
+    </div>
+
 
     <div className="content-grid">
       {/* Left Column: Idea Tree */}
