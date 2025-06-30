@@ -165,8 +165,12 @@ export default function IdeationGame() {
     const fetchMessages = () =>
       fetch(`${import.meta.env.VITE_API_URL}/api/messages/group/${groupId}`)
         .then(res => res.json())
-        .then(setMessages)
-        .catch(err => console.error('Chat error:', err));
+        .then(data => setMessages(Array.isArray(data) ? data : []))
+        .catch(err => {
+          console.error('Chat fetch error:', err);
+          setMessages([]); // keep it an array on error
+        });
+
 
     fetchMessages();
     const interval = setInterval(fetchMessages, 3000);
@@ -302,9 +306,13 @@ export default function IdeationGame() {
       <div className="chat-box">
         <h2>Group Chat</h2>
         <div className="chat-messages">
-          {messages.map(msg => (
-            <p key={msg.id}><strong>{msg.username}:</strong> {msg.content}</p>
-          ))}
+          {Array.isArray(messages) &&
+            messages.map(msg => (
+              <p key={msg.id}>
+                <strong>{msg.username}:</strong> {msg.content}
+              </p>
+            ))}
+
         </div>
         <textarea
           value={chatInput}
