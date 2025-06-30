@@ -51,7 +51,6 @@ body {
 .app-container {
   width: 50%;
   max-width: none;
-  margin: 0;
   padding: 2rem;
   background: #ffffff;
   border-radius: 8px;
