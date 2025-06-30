@@ -173,7 +173,7 @@ export default function IdeationGame() {
                   >
                     {isCollapsed ? '▶' : '▼'}
                   </span>
-                  {idea.content}
+                  <strong>{idea.username || 'Anonymous'}:</strong> {idea.content}
                 </p>
                 <button onClick={() => setParentId(idea.id)}>Build</button>
               </div>
