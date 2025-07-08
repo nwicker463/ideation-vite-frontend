@@ -65,9 +65,18 @@ export default function IdeationGame() {
     const fetchIdeas = () => {
       fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${groupId}`)
         .then(res => res.json())
-        .then(data => setIdeas(data))
-        .catch(err => console.error("Failed to fetch group ideas:", err));
-    };
+        .then(data => {
+          if (Array.isArray(data)) {
+            setIdeas(data);
+          } else {
+            console.warn('Unexpected idea data:', data);
+            setIdeas([]);
+          }
+        })
+        .catch(err => {
+          console.error('Failed to fetch ideas:', err);
+          setIdeas([]);
+        });
 
     // Initial fetch
     fetchIdeas();
