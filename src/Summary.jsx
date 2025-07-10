@@ -11,6 +11,8 @@ export default function Summary({ groupId }) {
       .then(data => setSummary(data))
       .catch(err => console.error('Failed to fetch summary:', err));
   }, [groupId]);
+  console.log("Fetching summary for group:", groupId);
+
 
   return (
     <div className="app-container">
