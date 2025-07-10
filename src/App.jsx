@@ -252,6 +252,8 @@ export default function IdeationGame() {
   return (
     <div className="app-container">
     <h1>Ideation Game</h1>
+    <a href="/summary">View Summary</a>
+
 
     <div className="input-group">
       <label>Your Name</label>
