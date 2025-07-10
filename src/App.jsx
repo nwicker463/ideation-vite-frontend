@@ -78,6 +78,7 @@ export default function IdeationGame() {
           console.error('Failed to fetch ideas:', err);
           setIdeas([]);
         });
+      };
 
     // Initial fetch
     fetchIdeas();
