@@ -11,7 +11,8 @@ export default function Summary({ groupId }) {
     console.log("Group ID:", savedGroupId);
 
 
-    fetch(`${import.meta.env.VITE_API_URL}/api/summary/group/${savedGroupId}`)
+    //fetch(`${import.meta.env.VITE_API_URL}/api/summary/group/${savedGroupId}`)
+    fetch(`https://ideation-backend-sql.onrender.com/api/summary/group/1`)
       .then(res => res.json())
       .then(data => setSummary(data))
       .catch(err => console.error('Failed to fetch summary:', err));
