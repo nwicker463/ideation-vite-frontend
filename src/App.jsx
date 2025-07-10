@@ -256,6 +256,7 @@ export default function IdeationGame() {
 
 
     <div className="input-group">
+      <a href="/summary">View Summary</a>
       <label>Your Name</label>
       <input
         type="text"
