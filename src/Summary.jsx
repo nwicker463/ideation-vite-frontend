@@ -4,7 +4,7 @@ export default function Summary({ groupId }) {
   const [summary, setSummary] = useState([]);
 
   useEffect(() => {
-    fetch(`https://ideation-backend-sql.onrender.com/api/summary/group/1`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/summary/group/${groupId}`)
       .then(res => {
         console.log("Fetch response:", res);
         return res.json();
