@@ -4,7 +4,7 @@ export default function Summary({ groupId }) {
   const [summary, setSummary] = useState([]);
 
   useEffect(() => {
-    fetch(`https://your-backend.onrender.com/api/summary/group/1`)
+    fetch(`https://ideation-backend-sql.onrender.com/api/summary/group/1`)
       .then(res => {
         console.log("Fetch response:", res);
         return res.json();
