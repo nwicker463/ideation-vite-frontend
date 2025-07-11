@@ -4,7 +4,7 @@ export default function Summary({ groupId }) {
   const [summary, setSummary] = useState([]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/summary/group/${groupId}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/summary/group/1`)
       .then(res => {
         console.log("Fetch response:", res);
         return res.json();
