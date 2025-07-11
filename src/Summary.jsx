@@ -4,19 +4,20 @@ export default function Summary({ groupId }) {
   const [summary, setSummary] = useState([]);
 
   useEffect(() => {
-    if (!groupId) return;
+    fetch(`https://your-backend.onrender.com/api/summary/group/1`)
+      .then(res => {
+        console.log("Fetch response:", res);
+        return res.json();
+      })
+      .then(data => {
+        console.log("Summary data received:", data);
+        setSummary(data);
+      })
+      .catch(err => {
+        console.error("Failed to fetch summary:", err);
+      });
+  }, []);
 
-    const savedGroupId = localStorage.getItem('groupId');
-    console.log("API URL:", import.meta.env.VITE_API_URL);
-    console.log("Group ID:", savedGroupId);
-
-
-    fetch(`${import.meta.env.VITE_API_URL}/api/summary/group/${savedGroupId}`)
-    //fetch(`https://ideation-backend-sql.onrender.com/api/summary/group/1`)
-      .then(res => res.json())
-      .then(data => setSummary(data))
-      .catch(err => console.error('Failed to fetch summary:', err));
-  }, [groupId]);
 
 
   return (
