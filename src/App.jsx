@@ -220,7 +220,16 @@ export default function IdeationGame() {
                   </span>
                   <strong>{idea.username || 'Anonymous'}:</strong> {idea.content}
                 </p>
-                <button onClick={() => setParentId(idea.id)}>Build</button>
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    setParentId(parentId === idea.id ? null : idea.id); // Toggle selection
+                  }}
+                  className={parentId === idea.id ? 'selected-button' : 'unselected-button'}
+                >
+                  Build on this idea
+                </Button>
+
               </div>
             </div>
 

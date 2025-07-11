@@ -103,6 +103,21 @@ button:hover {
   background-color: #0056b3;
 }
 
+.selected-button {
+  background-color: #2d6cdf; /* blue */
+  color: white;
+}
+
+.unselected-button {
+  background-color: #eee;
+  color: black;
+}
+
+.selected-button:hover,
+.unselected-button:hover {
+  opacity: 0.85;
+}
+
 .idea-card {
   background-color: #f1f5fb;
   border-left: 4px solid #007bff;
