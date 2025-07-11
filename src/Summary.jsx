@@ -4,18 +4,13 @@ export default function Summary({ groupId }) {
   const [summary, setSummary] = useState([]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/summary/group/1`)
-      .then(res => {
-        console.log("Fetch response:", res);
-        return res.json();
-      })
-      .then(data => {
-        console.log("Summary data received:", data);
-        setSummary(data);
-      })
-      .catch(err => {
-        console.error("Failed to fetch summary:", err);
-      });
+    const savedGroupId = localStorage.getItem('groupId');
+    if (!savedGroupId) return;
+
+    fetch(`${import.meta.env.VITE_API_URL}/api/summary/group/${savedGroupId}`)
+      .then(res => res.json())
+      .then(data => setSummary(data))
+      .catch(err => console.error("Summary fetch error:", err));
   }, []);
 
 
