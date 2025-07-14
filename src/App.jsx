@@ -222,16 +222,12 @@ export default function IdeationGame() {
                 </p>
                 <Button
                   size="sm"
-                  onClick={() =>
-                    setParentId(parentId === idea.id ? null : idea.id)
-                  }
-                  className={`${
-                    parentId === idea.id
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-black'
-                  } hover:opacity-80`}
+                  onClick={() => {
+                    setParentId(parentId === idea.id ? null : idea.id); // Toggle selection
+                  }}
+                  className={parentId === idea.id ? 'selected-button' : 'unselected-button'}
                 >
-                  Build on this idea
+                  Build on
                 </Button>
 
               </div>
