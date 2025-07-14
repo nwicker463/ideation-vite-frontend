@@ -105,12 +105,12 @@ button:hover {
 
 .selected-button {
   background-color: #2d6cdf; /* blue */
-  color: white;
+  color: #2d6cdf;
 }
 
 .unselected-button {
-  background-color: #eee;
-  color: black;
+  background-color: #07c;
+  color: white;
 }
 
 .selected-button:hover,

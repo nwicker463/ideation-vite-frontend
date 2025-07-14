@@ -227,7 +227,7 @@ export default function IdeationGame() {
                   }}
                   className={parentId === idea.id ? 'selected-button' : 'unselected-button'}
                 >
-                  Build on this idea
+                  Build on
                 </Button>
 
               </div>
