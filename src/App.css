@@ -104,8 +104,8 @@ button:hover {
 }
 
 .selected-button {
-  background-color: red; /* blue */
-  color: #2d6cdf;
+  background-color: #2d6cdf; /* blue */
+  color: red;
 }
 
 .unselected-button {
