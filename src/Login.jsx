@@ -14,7 +14,7 @@ export default function Login() {
 
     localStorage.setItem('username', username);
     localStorage.setItem('groupId', groupId);
-    setLocked(true);
+    localStorage.setLocked(true);
     navigate('/app'); // go to the main app
   };
 

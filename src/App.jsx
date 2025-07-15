@@ -24,6 +24,8 @@ export default function IdeationGame() {
   const [phrase, setPhrase] = useState('');
   const [collapsedNodes, setCollapsedNodes] = useState({});
   const [username, setUsername] = useState('');
+  const [locked, setLocked] = useState(localStorage.getItem('locked') === 'true');
+
 
   // Load saved username on mount
   useEffect(() => {
