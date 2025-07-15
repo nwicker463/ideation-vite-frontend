@@ -345,23 +345,15 @@ export default function IdeationGame() {
             disabled={locked}
           />
         </div>
-            {/*
+
         <div>
-          <label>Group</label>
-          <select
-            value={groupId || ''}
+          <label>Group ID</label>
+          <Input
+            value={groupId}
             onChange={(e) => setGroupId(e.target.value)}
             disabled={locked}
-          >
-            <option value="">Select a group</option>
-            {groups.map((group) => (
-              <option key={group.id} value={group.id}>
-                {group.name}
-              </option>
-            ))}
-          </select>
+          />
         </div>
-            */}
 
 
 
