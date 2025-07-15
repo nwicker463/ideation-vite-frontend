@@ -304,17 +304,25 @@ export default function IdeationGame() {
 
       {/* Middle Column: Form */}
       <div className="idea-form">
-        <h2>Add a New Idea</h2>
-
-        <div className="mb-4 space-y-2">
-          <Label>Select Group ID</Label>
+        {/*Locked Group Stuff*/}
+        <div>
+          <label>Username</label>
           <Input
-            type="number"
-            value={groupId || ''}
-            onChange={e => setGroupId(Number(e.target.value))}
-            placeholder="Enter a group ID"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            disabled={locked}
           />
         </div>
+
+        <div>
+          <label>Group ID</label>
+          <Input
+            value={groupId}
+            onChange={(e) => setGroupId(e.target.value)}
+            disabled={locked}
+          />
+        </div>
+        <h2>Add a New Idea</h2>
 
         <button onClick={createGroup}>Create New Group</button>
 
@@ -335,29 +343,6 @@ export default function IdeationGame() {
             placeholder="Enter your idea..."
           />
         </div>
-
-        {/*Locked Group Stuff*/}
-        <div>
-          <label>Username</label>
-          <Input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            disabled={locked}
-          />
-        </div>
-
-        <div>
-          <label>Group ID</label>
-          <Input
-            value={groupId}
-            onChange={(e) => setGroupId(e.target.value)}
-            disabled={locked}
-          />
-        </div>
-
-
-
-
         <button onClick={submitIdea}>Submit Idea</button>
       </div>
 
