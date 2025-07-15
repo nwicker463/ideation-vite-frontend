@@ -25,6 +25,7 @@ export default function IdeationGame() {
   const [collapsedNodes, setCollapsedNodes] = useState({});
   const [username, setUsername] = useState('');
   const [locked, setLocked] = useState(localStorage.getItem('locked') === 'true');
+  const [groups, setGroups] = useState([]);
 
 
   // Load saved username on mount
@@ -92,7 +93,16 @@ export default function IdeationGame() {
     return () => clearInterval(interval);
   }, [groupId]);
 
-
+  /* Fetching groups*/
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/groups`)
+      .then((res) => res.json())
+      .then((data) => setGroups(data))
+      .catch((err) => {
+        console.error('Failed to fetch groups:', err);
+        setGroups([]);
+      });
+  }, []);
 
   const submitIdea = async () => {
     if (!groupId) {
