@@ -345,7 +345,7 @@ export default function IdeationGame() {
             disabled={locked}
           />
         </div>
-
+            {/*
         <div>
           <label>Group</label>
           <select
@@ -361,6 +361,7 @@ export default function IdeationGame() {
             ))}
           </select>
         </div>
+            */}
 
 
 
