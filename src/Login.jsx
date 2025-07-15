@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  const [username, setUsername] = useState('');
-  const [groupId, setGroupId] = useState('');
+    const [groupId, setGroupId] = useState(localStorage.getItem('groupId'));
+    const [username, setUsername] = useState(localStorage.getItem('username'));
+    const [locked, setLocked] = useState(!!groupId && !!username);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -13,7 +14,7 @@ export default function Login() {
 
     localStorage.setItem('username', username);
     localStorage.setItem('groupId', groupId);
-
+    setLocked(true);
     navigate('/app'); // go to the main app
   };
 

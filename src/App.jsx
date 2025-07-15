@@ -200,6 +200,13 @@ export default function IdeationGame() {
     setChatInput('');
   };
 
+  const handleUnlock = () => {
+    localStorage.removeItem('groupId');
+    localStorage.removeItem('username');
+    setGroupId(null);
+    setUsername('');
+    setLocked(false);
+  };
 
   const renderTree = (parentId = null, level = 0) => {
     return ideas
@@ -297,10 +304,6 @@ export default function IdeationGame() {
           />
         </div>
 
-        {/*<div className="newGroupButton">
-          <Button onClick={createGroup}>Create New Group</Button>
-        </div>*/}
-
         <button onClick={createGroup}>Create New Group</button>
 
         <div className="input-group">
@@ -320,6 +323,35 @@ export default function IdeationGame() {
             placeholder="Enter your idea..."
           />
         </div>
+
+        {/*Locked Group Stuff*/}
+        <div>
+          <label>Username</label>
+          <Input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            disabled={locked}
+          />
+        </div>
+
+        <div>
+          <label>Group</label>
+          <select
+            value={groupId || ''}
+            onChange={(e) => setGroupId(e.target.value)}
+            disabled={locked}
+          >
+            <option value="">Select a group</option>
+            {groups.map((group) => (
+              <option key={group.id} value={group.id}>
+                {group.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+
+
 
         <button onClick={submitIdea}>Submit Idea</button>
       </div>
