@@ -28,8 +28,9 @@ export default function IdeationGame() {
   const [groups, setGroups] = useState([]);
 
   const [timeLeft, setTimeLeft] = useState(() => {
-    const stored = localStorage.getItem('ideation-timer');
-    return stored ? parseInt(stored) : 60; // 600 seconds = 10 minutes
+    const groupKey = `timer-${groupId}`;
+    const stored = localStorage.getItem(groupKey);
+    return stored ? parseInt(stored) : 600;
   });
   const [timerActive, setTimerActive] = useState(timeLeft > 0);
 
@@ -221,24 +222,39 @@ export default function IdeationGame() {
 
   //timer ticking logic
   useEffect(() => {
-    if (!timerActive) return;
+    if (!groupId || !timerActive) return;
 
+    const groupKey = `timer-${groupId}`;
     const interval = setInterval(() => {
       setTimeLeft(prev => {
         const newTime = prev - 1;
         if (newTime <= 0) {
           clearInterval(interval);
           setTimerActive(false);
-          localStorage.setItem('ideation-timer', '0');
+          localStorage.setItem(groupKey, '0');
           return 0;
         }
-        localStorage.setItem('ideation-timer', newTime.toString());
+        localStorage.setItem(groupKey, newTime.toString());
         return newTime;
       });
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [timerActive]);
+  }, [groupId, timerActive]);
+
+  //refreash timer when switching groups
+  useEffect(() => {
+    if (!groupId) return;
+    const groupKey = `timer-${groupId}`;
+    const stored = localStorage.getItem(groupKey);
+    const defaultTime = 600; // Change this to your desired default
+    const initial = stored ? parseInt(stored) : defaultTime;
+
+    setTimeLeft(initial);
+    setTimerActive(initial > 0);
+  }, [groupId]);
+
+
 
 
   const handleUnlock = () => {
