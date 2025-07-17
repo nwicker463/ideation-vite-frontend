@@ -284,15 +284,6 @@ export default function IdeationGame() {
     <h1>Ideation Game</h1>
     <Link to="/summary">View Summary</Link>
 
-    <div className="input-group">
-      <label>Your Name</label>
-      <input
-        type="text"
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-        placeholder="Enter your name"
-      />
-    </div>
 
 
     <div className="content-grid">
