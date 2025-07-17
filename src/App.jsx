@@ -244,27 +244,6 @@ export default function IdeationGame() {
     setChatInput('');
   };
 
-  //timer ticking logic
-  useEffect(() => {
-    if (!groupId || !timerActive) return;
-
-    const groupKey = `timer-${groupId}`;
-    const interval = setInterval(() => {
-      setTimeLeft(prev => {
-        const newTime = prev - 1;
-        if (newTime <= 0) {
-          clearInterval(interval);
-          setTimerActive(false);
-          localStorage.setItem(groupKey, '0');
-          return 0;
-        }
-        localStorage.setItem(groupKey, newTime.toString());
-        return newTime;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [groupId, timerActive]);
 
   //countdown logic
     useEffect(() => {
