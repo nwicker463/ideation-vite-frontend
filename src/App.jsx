@@ -27,14 +27,38 @@ export default function IdeationGame() {
   const [locked, setLocked] = useState(localStorage.getItem('locked') === 'true');
   const [groups, setGroups] = useState([]);
 
-  const [timeLeft, setTimeLeft] = useState(() => {
-    const groupKey = `timer-${groupId}`;
-    const stored = localStorage.getItem(groupKey);
-    return stored ? parseInt(stored) : 600;
-  });
-  const [timerActive, setTimerActive] = useState(timeLeft > 0);
+  const [timeLeft, setTimeLeft] = useState(null);
+  const [timerActive, setTimerActive] = useState(false);
 
+  //timer initialization
+  useEffect(() => {
+    if (!groupId) return;
 
+    const fetchTimer = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/groups/${groupId}/timer`);
+        const data = await res.json();
+
+        if (!data.timerStart) {
+          setTimerActive(false);
+          return;
+        }
+
+        const startTime = new Date(data.timerStart).getTime();
+        const now = Date.now();
+        const elapsed = Math.floor((now - startTime) / 1000); // in seconds
+        const duration = 600; // 10 minutes
+
+        const remaining = Math.max(0, duration - elapsed);
+        setTimeLeft(remaining);
+        setTimerActive(remaining > 0);
+      } catch (err) {
+        console.error('Failed to fetch group timer:', err);
+      }
+    };
+
+    fetchTimer();
+  }, [groupId]);
 
   // Load saved username on mount
   useEffect(() => {
@@ -242,6 +266,25 @@ export default function IdeationGame() {
     return () => clearInterval(interval);
   }, [groupId, timerActive]);
 
+  //countdown logic
+    useEffect(() => {
+    if (!timerActive) return;
+
+    const interval = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setTimerActive(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timerActive]);
+
+
   //refreash timer when switching groups
   useEffect(() => {
     if (!groupId) return;
@@ -328,6 +371,15 @@ export default function IdeationGame() {
     <div className="app-container">
     <h1>Ideation Game</h1>
     <Link to="/summary">View Summary</Link>
+    <Button onClick={async () => {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/groups/${groupId}/timer/start`, {
+        method: 'POST'
+      });
+      window.location.reload(); // re-fetch and re-sync the timer
+    }}>
+      Start Timer
+    </Button>
+
     <div className="mb-4 text-lg font-semibold">
       Time Left: {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
     </div>
