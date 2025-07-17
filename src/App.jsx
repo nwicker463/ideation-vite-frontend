@@ -27,6 +27,13 @@ export default function IdeationGame() {
   const [locked, setLocked] = useState(localStorage.getItem('locked') === 'true');
   const [groups, setGroups] = useState([]);
 
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const stored = localStorage.getItem('ideation-timer');
+    return stored ? parseInt(stored) : 600; // 600 seconds = 10 minutes
+  });
+  const [timerActive, setTimerActive] = useState(timeLeft > 0);
+
+
 
   // Load saved username on mount
   useEffect(() => {
@@ -212,6 +219,28 @@ export default function IdeationGame() {
     setChatInput('');
   };
 
+  //timer ticking logic
+  useEffect(() => {
+    if (!timerActive) return;
+
+    const interval = setInterval(() => {
+      setTimeLeft(prev => {
+        const newTime = prev - 1;
+        if (newTime <= 0) {
+          clearInterval(interval);
+          setTimerActive(false);
+          localStorage.setItem('ideation-timer', '0');
+          return 0;
+        }
+        localStorage.setItem('ideation-timer', newTime.toString());
+        return newTime;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timerActive]);
+
+
   const handleUnlock = () => {
     localStorage.removeItem('groupId');
     localStorage.removeItem('username');
@@ -283,8 +312,9 @@ export default function IdeationGame() {
     <div className="app-container">
     <h1>Ideation Game</h1>
     <Link to="/summary">View Summary</Link>
-
-
+    <div className="mb-4 text-lg font-semibold">
+      Time Left: {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
+    </div>
 
     <div className="content-grid">
       {/* Left Column: Idea Tree */}
@@ -334,7 +364,9 @@ export default function IdeationGame() {
             placeholder="Enter your idea..."
           />
         </div>
-        <button onClick={submitIdea}>Submit Idea</button>
+        <Button onClick={submitIdea} disabled={!timerActive}>
+          Submit Idea
+        </Button>
       </div>
 
       <div className="chat-box">
@@ -355,6 +387,9 @@ export default function IdeationGame() {
         />
         <button onClick={sendMessage}>Send</button>
       </div>
+      {!timerActive && (
+        <p className="text-red-600 mt-2">Time’s up! You can no longer submit ideas.</p>
+      )}
     </div>
   </div>
 
