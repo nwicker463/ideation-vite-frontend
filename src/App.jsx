@@ -29,7 +29,7 @@ export default function IdeationGame() {
 
   const [timeLeft, setTimeLeft] = useState(() => {
     const stored = localStorage.getItem('ideation-timer');
-    return stored ? parseInt(stored) : 600; // 600 seconds = 10 minutes
+    return stored ? parseInt(stored) : 60; // 600 seconds = 10 minutes
   });
   const [timerActive, setTimerActive] = useState(timeLeft > 0);
 
