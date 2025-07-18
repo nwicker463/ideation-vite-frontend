@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import App from './App.jsx';
 import Summary from './Summary.jsx';
 import Login from './Login.jsx';
+import WaitingRoom from './WaitingRoom';
 import './index.css';
 
 const ProtectedApp = () => {
