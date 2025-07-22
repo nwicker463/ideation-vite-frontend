@@ -22,7 +22,16 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<WaitingRoom />} />
+        <Route
+          path="/"
+          element={
+            <WaitingRoom
+              userId={userId}
+              setGroupId={setGroupId}
+              setLocked={setLocked}
+            />
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/app" element={<ProtectedApp />} />
         <Route path="/summary" element={<Summary />} />

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function WaitingRoom() {
+export default function WaitingRoom({ userId, setGroupId, setLocked }) {
   const [userId] = useState(() => crypto.randomUUID()); // or MTurk ID
   const [groupId, setGroupId] = useState(null);
   const navigate = useNavigate();
