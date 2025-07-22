@@ -6,16 +6,24 @@ export default function WaitingRoom() {
   const [groupId, setGroupId] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Join the waiting room
-    fetch(`${import.meta.env.VITE_API_URL}/api/waiting`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId }),
-    });
+useEffect(() => {
+  if (!userId) return;
+
+  fetch(`${import.meta.env.VITE_API_URL}/api/waiting`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId })
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log('Posted user to waiting room:', data);
+    })
+    .catch(err => console.error('Failed to post user to waiting room:', err));
+}, [userId]);
+
 
     // Poll every 2 seconds to check for group assignment
-    const interval = setInterval(() => {
+    /*const interval = setInterval(() => {
       fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
         .then(res => res.json())
         .then(data => {
@@ -28,7 +36,7 @@ export default function WaitingRoom() {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [navigate, userId]);
+  }, [navigate, userId]);*/
 
   return (
     <div className="p-6">
