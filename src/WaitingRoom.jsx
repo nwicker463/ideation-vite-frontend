@@ -27,7 +27,7 @@ export default function WaitingRoom() {
         console.log('User added to waiting list:', data);
 
         // Begin polling
-        intervalId = setInterval(async () => {
+        /*intervalId = setInterval(async () => {
           try {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`);
             const result = await res.json();
@@ -42,7 +42,7 @@ export default function WaitingRoom() {
           } catch (err) {
             console.error('Polling failed:', err);
           }
-        }, 2000);
+        }, 2000);*/
       } catch (err) {
         console.error('Error posting to waiting list:', err);
       }
@@ -52,6 +52,24 @@ export default function WaitingRoom() {
 
     return () => clearInterval(intervalId);
   }, [userId, setGroupId, setLocked, navigate]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.group_id) {
+            setGroupId(data.group_id);
+            setLocked(true);
+            navigate('/app');
+          }
+        })
+        .catch(err => console.error('Error fetching group ID:', err));
+    }, 2000); // Poll every 2 seconds
+
+    return () => clearInterval(interval);
+  }, [userId]);
+
 
 
   return (
