@@ -7,49 +7,49 @@ export default function WaitingRoom({ userId, setGroupId, setLocked }) {
   const navigate = useNavigate();
   const [isWaiting, setIsWaiting] = useState(true);
 
-useEffect(() => {
-  if (!userId) return;
+  useEffect(() => {
+    if (!userId) return;
 
-  let intervalId;
+    let intervalId;
 
-  const addToWaitingList = async () => {
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waiting`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId }),
-      });
+    const addToWaitingList = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waiting`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId }),
+        });
 
-      if (!res.ok) throw new Error('Failed to add user to waiting list');
-      const data = await res.json();
-      console.log('User added to waiting list:', data);
+        if (!res.ok) throw new Error('Failed to add user to waiting list');
+        const data = await res.json();
+        console.log('User added to waiting list:', data);
 
-      // Begin polling
-      intervalId = setInterval(async () => {
-        try {
-          const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`);
-          const result = await res.json();
-          console.log('Polling result:', result);
+        // Begin polling
+        intervalId = setInterval(async () => {
+          try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`);
+            const result = await res.json();
+            console.log('Polling result:', result);
 
-          if (result.group_id) {
-            setGroupId(result.group_id);
-            setLocked(true);
-            clearInterval(intervalId);
-            navigate('/app');
+            if (result.group_id) {
+              setGroupId(result.group_id);
+              setLocked(true);
+              clearInterval(intervalId);
+              navigate('/app');
+            }
+          } catch (err) {
+            console.error('Polling failed:', err);
           }
-        } catch (err) {
-          console.error('Polling failed:', err);
-        }
-      }, 2000);
-    } catch (err) {
-      console.error('Error posting to waiting list:', err);
-    }
-  };
+        }, 2000);
+      } catch (err) {
+        console.error('Error posting to waiting list:', err);
+      }
+    };
 
-  addToWaitingList();
+    addToWaitingList();
 
-  return () => clearInterval(intervalId);
-}, [userId, setGroupId, setLocked, navigate]);
+    return () => clearInterval(intervalId);
+  }, [userId, setGroupId, setLocked, navigate]);
 
 
   return (
