@@ -79,7 +79,7 @@ export default function WaitingRoom() {
   return (
     <div className="p-6">
       <h2 className="text-xl font-bold mb-4">Waiting for other participants...</h2>
-      <p>You will be assigned to a group as soon as 1 more users join.</p>
+      <p>You will be assigned to a group as soon as 2 more users join.</p>
     </div>
   );
 }
