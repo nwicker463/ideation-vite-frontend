@@ -61,6 +61,10 @@ export default function WaitingRoom() {
           if (data.groupId) {
             setGroupId(data.groupId);
             setLocked(true);
+
+            localStorage.setItem('groupId', data.groupId);
+            localStorage.setItem('userId', userId);
+
             navigate('/app');
           }
         })

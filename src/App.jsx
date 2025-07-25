@@ -17,13 +17,13 @@ const conjunctivePhrases = [
 ];
 
 export default function IdeationGame() {
-  const [groupId, setGroupId] = useState(null);
+  const [groupId, setGroupId] = useState(() => localStorage.getItem('groupId') || '');
   const [ideas, setIdeas] = useState([]);
   const [parentId, setParentId] = useState(null);
   const [content, setContent] = useState('');
   const [phrase, setPhrase] = useState('');
   const [collapsedNodes, setCollapsedNodes] = useState({});
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(() => localStorage.getItem('userId') || '');
   const [locked, setLocked] = useState(localStorage.getItem('locked') === 'true');
   const [groups, setGroups] = useState([]);
 
