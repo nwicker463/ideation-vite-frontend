@@ -58,8 +58,8 @@ export default function WaitingRoom() {
       fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
         .then(res => res.json())
         .then(data => {
-          if (data.group_id) {
-            setGroupId(data.group_id);
+          if (data.groupId) {
+            setGroupId(data.groupId);
             setLocked(true);
             navigate('/app');
           }
