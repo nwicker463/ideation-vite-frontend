@@ -26,8 +26,8 @@ export default function IdeationGame() {
   const [username, setUsername] = useState(() => localStorage.getItem('userId') || '');
   const [locked, setLocked] = useState(localStorage.getItem('locked') === 'true');
   const [groups, setGroups] = useState([]);
-
-  const [timeLeft, setTimeLeft] = useState(null);
+  const [endTime, setEndTime] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
 
   //timer initialization
@@ -390,8 +390,8 @@ export default function IdeationGame() {
       Start Timer
     </Button>
 
-    <div className="mb-4 text-lg font-semibold">
-      Time Left: {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
+    <div className="text-xl font-semibold">
+      Time Left: {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}
     </div>
 
     <div className="content-grid">
