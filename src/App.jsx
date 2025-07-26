@@ -392,6 +392,11 @@ export default function IdeationGame() {
 
     <div className="text-xl font-semibold">
       Time Left: {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}
+
+      {!timerActive && (
+        <p className="text-red-600 mt-2">Time's up! You can no longer submit ideas.</p>
+      )}
+
     </div>
 
     <div className="content-grid">
@@ -465,9 +470,6 @@ export default function IdeationGame() {
         />
         <button onClick={sendMessage}>Send</button>
       </div>
-      {!timerActive && (
-        <p className="text-red-600 mt-2">Time’s up! You can no longer submit ideas.</p>
-      )}
     </div>
   </div>
 
