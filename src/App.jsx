@@ -31,7 +31,7 @@ export default function IdeationGame() {
   const [timerActive, setTimerActive] = useState(false);
 
   //timer initialization
-  useEffect(() => {
+  /* useEffect(() => {
     if (!groupId) return;
 
     const fetchTimer = async () => {
@@ -58,6 +58,37 @@ export default function IdeationGame() {
     };
 
     fetchTimer();
+  }, [groupId]); */
+
+  useEffect(() => {
+    if (!endTime) return;
+
+    const interval = setInterval(() => {
+      const now = new Date();
+      const remaining = Math.max(0, Math.floor((endTime - now) / 1000));
+      setTimeLeft(remaining);
+
+      if (remaining === 0) {
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [endTime]);
+
+
+  // Fetching starting time
+  useEffect(() => {
+    if (!groupId) return;
+
+    fetch(`${import.meta.env.VITE_API_URL}/api/groups/${groupId}/start`)
+      .then(res => res.json())
+      .then(data => {
+        const startTime = new Date(data.startTime);
+        const endTime = new Date(startTime.getTime() + 10 * 60 * 1000); // 10 minutes later
+        setEndTime(endTime);
+      })
+      .catch(err => console.error('Failed to fetch start time:', err));
   }, [groupId]);
 
   // Load saved username on mount
@@ -244,7 +275,7 @@ export default function IdeationGame() {
     setChatInput('');
   };
 
-
+  //possibly delete?
   //countdown logic
     useEffect(() => {
     if (!timerActive) return;
@@ -263,8 +294,8 @@ export default function IdeationGame() {
     return () => clearInterval(interval);
   }, [timerActive]);
 
-
-  //refreash timer when switching groups
+  //possibly delete?
+  //refresh timer when switching groups
   useEffect(() => {
     if (!groupId) return;
     const groupKey = `timer-${groupId}`;
