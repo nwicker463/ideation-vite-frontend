@@ -176,14 +176,15 @@ export default function IdeationGame() {
     const fullContent = phrase ? `${phrase} ${content}` : content;
 
     await fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${groupId}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        content,
         parentId,
-        content: fullContent,
-        username,
-      }),
+        label: userLabel // instead of userId
+      })
     });
+
 
     setContent('');
     setPhrase('');
@@ -241,6 +242,18 @@ export default function IdeationGame() {
   useEffect(() => {
     localStorage.setItem('ideaContent', content);
   }, [content]);
+
+  // Fetch the user info after joining a group
+  useEffect(() => {
+    if (!userId) return;
+    fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
+      .then(res => res.json())
+      .then(data => {
+        setGroupId(data.group_id);
+        setUserLabel(data.label);
+        localStorage.setItem("userLabel", data.label);
+      });
+  }, [userId]);
 
   const [messages, setMessages] = useState([]);
   const [chatInput, setChatInput] = useState('');
@@ -380,6 +393,7 @@ export default function IdeationGame() {
   return (
     <div className="app-container">
     <h1>Ideation Game</h1>
+    <p><strong>{idea.contributor_label}</strong>: {idea.content}</p>
     <Link to="/summary">View Summary</Link>
     {/*<Button onClick={async () => {
       await fetch(`${import.meta.env.VITE_API_URL}/api/groups/${groupId}/timer/start`, {
