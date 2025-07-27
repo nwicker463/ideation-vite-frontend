@@ -31,6 +31,35 @@ export default function IdeationGame() {
   const [timerActive, setTimerActive] = useState(false);
 
   //timer initialization
+  /* useEffect(() => {
+    if (!groupId) return;
+
+    const fetchTimer = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/groups/${groupId}/timer`);
+        const data = await res.json();
+
+        if (!data.timerStart) {
+          setTimerActive(false);
+          return;
+        }
+
+        const startTime = new Date(data.timerStart).getTime();
+        const now = Date.now();
+        const elapsed = Math.floor((now - startTime) / 1000); // in seconds
+        const duration = 600; // 10 minutes
+
+        const remaining = Math.max(0, duration - elapsed);
+        setTimeLeft(remaining);
+        setTimerActive(remaining > 0);
+      } catch (err) {
+        console.error('Failed to fetch group timer:', err);
+      }
+    };
+
+    fetchTimer();
+  }, [groupId]); */
+
   useEffect(() => {
     if (!endTime) return;
 
@@ -46,6 +75,7 @@ export default function IdeationGame() {
 
     return () => clearInterval(interval);
   }, [endTime]);
+
 
   // Fetching starting time
   useEffect(() => {
@@ -85,7 +115,9 @@ export default function IdeationGame() {
     }
   }, []);
 
-  // Whenever groupId changes, persist it.
+  /* -------------------------------------------
+    Whenever groupId changes, persist it.
+  --------------------------------------------*/
   useEffect(() => {
     if (groupId !== null) {
       localStorage.setItem('groupId', groupId);
@@ -124,7 +156,7 @@ export default function IdeationGame() {
     return () => clearInterval(interval);
   }, [groupId]);
 
-  // Fetching groups
+  /* Fetching groups*/
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/groups`)
       .then((res) => res.json())
@@ -172,7 +204,7 @@ export default function IdeationGame() {
     }));
   };
 
-  // Load data whenever the app reloads to poll for new ideas added
+  // Load collapsed state from localStorage
   useEffect(() => {
     const saved = localStorage.getItem('collapsedNodes');
     if (saved) {
@@ -349,6 +381,14 @@ export default function IdeationGame() {
     <div className="app-container">
     <h1>Ideation Game</h1>
     <Link to="/summary">View Summary</Link>
+    {/*<Button onClick={async () => {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/groups/${groupId}/timer/start`, {
+        method: 'POST'
+      });
+      window.location.reload(); // re-fetch and re-sync the timer
+    }}>
+      Start Timer
+    </Button> */}
 
     <div className="text-xl font-semibold">
       Time Left: {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}
@@ -370,10 +410,24 @@ export default function IdeationGame() {
       <div className="idea-form">
         {/*Locked Group Stuff*/}
         <div>
+          {/*<Input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            disabled={locked}
+          />*/}
           <p className="text-red-600 mt-2">userId: {username}</p>
+
+          {/*<Input
+            value={groupId}
+            onChange={(e) => setGroupId(e.target.value)}
+            disabled={locked}
+          /> */}
           <p className="text-red-600 mt-2">groupId: {groupId}</p>
         </div>
         <h2>Add a New Idea</h2>
+
+        {/* <button onClick={createGroup}>Create New Group</button> */}
+
         <div className="input-group">
           <label>Conjunctive Phrase</label>
           <select value={phrase} onChange={e => setPhrase(e.target.value)}>
@@ -416,5 +470,6 @@ export default function IdeationGame() {
       </div>
     </div>
   </div>
+
   );
 }
