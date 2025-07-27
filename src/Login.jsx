@@ -12,7 +12,7 @@ export default function Login() {
 
     if (!username || !groupId) return alert('Please fill out both fields');
 
-    //localStorage.setItem('username', userId);
+    localStorage.setItem('username', userId);
     localStorage.setItem('groupId', groupId);
     localStorage.setItem('locked', true);
     navigate('/app'); // go to the main app
