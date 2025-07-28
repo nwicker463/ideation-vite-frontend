@@ -93,7 +93,7 @@ export default function IdeationGame() {
 
   // Load saved username on mount
   useEffect(() => {
-    const saved = localStorage.getItem('userId');
+    const saved = localStorage.getItem('username');
     if (saved) setUsername(saved);
   }, []);
 
