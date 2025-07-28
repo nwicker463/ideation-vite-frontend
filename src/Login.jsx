@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-    const [groupId, setGroupId] = useState(localStorage.getItem('groupId'));
-    const [username, setUsername] = useState(localStorage.getItem('username'));
-    const [locked, setLocked] = useState(!!groupId && !!username);
+  const [groupId, setGroupId] = useState(localStorage.getItem('groupId'));
+  const [username, setUsername] = useState(localStorage.getItem('userId'));
+  const [locked, setLocked] = useState(!!groupId && !!username);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
