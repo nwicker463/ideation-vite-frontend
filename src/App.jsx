@@ -30,6 +30,7 @@ export default function IdeationGame() {
   const [timeLeft, setTimeLeft] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
   const [userId, setUserId] = useState(() => localStorage.getItem('userId') || '');
+  const [userLabel, setUserLabel] = useState('');
 
   //timer initialization
   /* useEffect(() => {
