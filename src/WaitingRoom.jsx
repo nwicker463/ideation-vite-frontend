@@ -61,23 +61,21 @@ export default function WaitingRoom() {
       fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
         .then(res => res.json())
         .then(data => {
-          if (data.groupId) {
-            setGroupId(data.groupId);
+          console.log("Waiting check data:", data);
+
+          if (data.group_id && data.label) {
+            setGroupId(data.group_id);
+            setUserLabel(data.label);
             setLocked(true);
 
-            localStorage.setItem('groupId', data.groupId);
-            localStorage.setItem('userId', userId);
+            localStorage.setItem("groupId", data.group_id);
+            localStorage.setItem("userId", userId);
             localStorage.setItem("userLabel", data.label);
 
-            if (data.groupId && data.label) {
-              setGroupId(data.groupId);
-              setUserLabel(data.label);
-              setLocked(true);
-              navigate("/app");
-            }
+            navigate("/app");
           }
         })
-        .catch(err => console.error('Error fetching group ID:', err));
+        .catch(err => console.error("Error fetching group ID:", err));
     }, 2000); // Poll every 2 seconds
 
     return () => clearInterval(interval);
