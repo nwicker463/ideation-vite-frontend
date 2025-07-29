@@ -17,7 +17,7 @@ const conjunctivePhrases = [
 ];
 
 export default function IdeationGame() {
-  const [groupId, setGroupId] = useState(() => localStorage.getItem('groupId'));
+  //const [groupId, setGroupId] = useState(() => localStorage.getItem('groupId'));
   const [ideas, setIdeas] = useState([]);
   const [parentId, setParentId] = useState(null);
   const [content, setContent] = useState('');
@@ -29,8 +29,12 @@ export default function IdeationGame() {
   const [endTime, setEndTime] = useState(null);
   const [timeLeft, setTimeLeft] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
-  const [userId, setUserId] = useState(() => localStorage.getItem('userId') || '');
-  const [userLabel, setUserLabel] = useState('');
+  //const [userId, setUserId] = useState(() => localStorage.getItem('userId') || '');
+  //const [userLabel, setUserLabel] = useState('');
+  const [userId, setUserId] = useState(localStorage.getItem("userId"));
+  const [groupId, setGroupId] = useState(localStorage.getItem("groupId"));
+  const [userLabel, setUserLabel] = useState(localStorage.getItem("userLabel"));
+
 
   //timer initialization
   /* useEffect(() => {

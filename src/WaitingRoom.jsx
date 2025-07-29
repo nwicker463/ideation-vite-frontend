@@ -25,6 +25,9 @@ export default function WaitingRoom() {
         if (!res.ok) throw new Error('Failed to add user to waiting list');
         const data = await res.json();
         console.log('User added to waiting list:', data);
+        console.log("Assigned group:", data.groupId);
+        console.log("Assigned label:", data.label);
+        console.log("Current userId:", userId);
 
         // Begin polling
         /*intervalId = setInterval(async () => {
@@ -64,8 +67,14 @@ export default function WaitingRoom() {
 
             localStorage.setItem('groupId', data.groupId);
             localStorage.setItem('userId', userId);
+            localStorage.setItem("userLabel", data.label);
 
-            navigate('/app');
+            if (data.groupId && data.label) {
+              setGroupId(data.groupId);
+              setUserLabel(data.label);
+              setLocked(true);
+              navigate("/app");
+            }
           }
         })
         .catch(err => console.error('Error fetching group ID:', err));
