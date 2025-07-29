@@ -17,7 +17,7 @@ const conjunctivePhrases = [
 ];
 
 export default function IdeationGame() {
-  const [groupId, setGroupId] = useState(() => localStorage.getItem('groupId') || '');
+  const [groupId, setGroupId] = useState(() => localStorage.getItem('groupId'));
   const [ideas, setIdeas] = useState([]);
   const [parentId, setParentId] = useState(null);
   const [content, setContent] = useState('');
