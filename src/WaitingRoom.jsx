@@ -7,6 +7,7 @@ export default function WaitingRoom() {
   const navigate = useNavigate();
   const [isWaiting, setIsWaiting] = useState(true);
   const [locked, setLocked] = useState(false);
+  const [userLabel, setUserLabel] = useState(null);
 
 
   useEffect(() => {
@@ -57,13 +58,18 @@ export default function WaitingRoom() {
   }, [userId, setGroupId, setLocked, navigate]);
 
   useEffect(() => {
+    let navigated = false;
+
     const interval = setInterval(() => {
       fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
         .then(res => res.json())
         .then(data => {
-          console.log("Waiting check data:", data);
+          console.log("Polling data:", data);
+          console.log("group_id:", data.group_id);
+          console.log("label:", data.label);
 
-          if (data.group_id && data.label) {
+          if (!navigated && data.group_id && data.label) {
+            // Set in state and local storage
             setGroupId(data.group_id);
             setUserLabel(data.label);
             setLocked(true);
@@ -72,11 +78,12 @@ export default function WaitingRoom() {
             localStorage.setItem("userId", userId);
             localStorage.setItem("userLabel", data.label);
 
+            navigated = true;
             navigate("/app");
           }
         })
         .catch(err => console.error("Error fetching group ID:", err));
-    }, 2000); // Poll every 2 seconds
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [userId]);
