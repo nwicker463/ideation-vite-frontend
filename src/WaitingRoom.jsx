@@ -64,17 +64,14 @@ export default function WaitingRoom() {
       fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
         .then(res => res.json())
         .then(data => {
-          console.log("Polling data:", data);
-          console.log("group_id:", data.group_id);
-          console.log("label:", data.label);
+          console.log("Polling data:", data); // should show { groupId: "...", label: "User A", ... }
 
-          if (!navigated && data.group_id && data.label) {
-            // Set in state and local storage
-            setGroupId(data.group_id);
+          if (!navigated && data.groupId && data.label) {
+            setGroupId(data.groupId);
             setUserLabel(data.label);
             setLocked(true);
 
-            localStorage.setItem("groupId", data.group_id);
+            localStorage.setItem("groupId", data.groupId);
             localStorage.setItem("userId", userId);
             localStorage.setItem("userLabel", data.label);
 
