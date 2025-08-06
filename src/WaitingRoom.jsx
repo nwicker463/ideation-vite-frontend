@@ -71,6 +71,11 @@ export default function WaitingRoom() {
             setUserLabel(data.label);
             setLocked(true);
 
+            console.log("Saving to localStorage:");
+            console.log("userId:", userId);
+            console.log("groupId:", data.groupId);
+            console.log("userLabel:", data.label);
+
             localStorage.setItem("groupId", data.groupId);
             localStorage.setItem("userId", userId);
             localStorage.setItem("userLabel", data.label);
