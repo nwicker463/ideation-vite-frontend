@@ -17,7 +17,7 @@ const conjunctivePhrases = [
 ];
 
 export default function IdeationGame() {
-  const [groupId, setGroupId] = useState(() => localStorage.getItem('groupId'));
+  //const [groupId, setGroupId] = useState(() => localStorage.getItem('groupId'));
   const [ideas, setIdeas] = useState([]);
   const [parentId, setParentId] = useState(null);
   const [content, setContent] = useState('');
@@ -31,9 +31,16 @@ export default function IdeationGame() {
   const [timerActive, setTimerActive] = useState(false);
   //const [userId, setUserId] = useState(() => localStorage.getItem('userId') || '');
   //const [userLabel, setUserLabel] = useState('');
-  const [userId, setUserId] = useState(localStorage.getItem("userId"));
+  //const [userId, setUserId] = useState(localStorage.getItem("userId"));
   // const [groupId, setGroupId] = useState(localStorage.getItem("groupId"));
-  const [userLabel, setUserLabel] = useState(localStorage.getItem("userLabel"));
+  //const [userLabel, setUserLabel] = useState(localStorage.getItem("userLabel"));
+  const [userId, setUserId] = useState(() => localStorage.getItem("userId"));
+  const [groupId, setGroupId] = useState(() => localStorage.getItem("groupId"));
+  const [userLabel, setUserLabel] = useState(() => localStorage.getItem("userLabel"));
+
+  console.log("userId:", userId);
+  console.log("groupId:", groupId);
+  console.log("userLabel:", userLabel);
 
 
   //timer initialization
@@ -173,37 +180,34 @@ export default function IdeationGame() {
       });
   }, []);
 
-  const submitIdea = async () => {
-    const storedGroupId = localStorage.getItem("groupId") || groupId;
+const submitIdea = async () => {
+  const contentToSubmit = phrase ? `${phrase} ${content}` : content;
 
-    if (!storedGroupId) {
-      alert("Please select or create a group first.");
-      return;
-    }
+  const currentGroupId = groupId || localStorage.getItem("groupId");
+  const currentUserLabel = userLabel || localStorage.getItem("userLabel");
 
-    // Use storedGroupId in the fetch call
-    await fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${storedGroupId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        content,
-        parentId,
-        label: userLabel
-      })
-    });
+  if (!currentGroupId) {
+    alert("Please select or create a group first.");
+    return;
+  }
 
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${currentGroupId}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      content: contentToSubmit,
+      parentId,
+      label: currentUserLabel
+    })
+  });
 
+  if (res.ok) {
     setContent('');
     setPhrase('');
-    localStorage.removeItem('ideaContent');
-    localStorage.removeItem('phrase');
     setParentId(null);
+  }
+};
 
-    const updated = await fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${groupId}`)
-      .then(res => res.json());
-
-    setIdeas(updated);
-  };
 
   const toggleCollapse = (id) => {
     setCollapsedNodes(prev => ({
@@ -327,7 +331,12 @@ export default function IdeationGame() {
     setTimerActive(initial > 0);
   }, [groupId]);
 
-
+  //resync states if they are null
+  useEffect(() => {
+    if (!userId) setUserId(localStorage.getItem("userId"));
+    if (!groupId) setGroupId(localStorage.getItem("groupId"));
+    if (!userLabel) setUserLabel(localStorage.getItem("userLabel"));
+  }, []);
 
 
   const handleUnlock = () => {
@@ -430,19 +439,9 @@ export default function IdeationGame() {
       <div className="idea-form">
         {/*Locked Group Stuff*/}
         <div>
-          {/*<Input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            disabled={locked}
-          />*/}
-          <p className="text-red-600 mt-2">userId: {username}</p>
-
-          {/*<Input
-            value={groupId}
-            onChange={(e) => setGroupId(e.target.value)}
-            disabled={locked}
-          /> */}
-          <p className="text-red-600 mt-2">groupId: {groupId}</p>
+          <p>User ID: {userId || localStorage.getItem("userId")}</p>
+          <p>Group ID: {groupId || localStorage.getItem("groupId")}</p>
+          <p>Label: {userLabel || localStorage.getItem("userLabel")}</p>
         </div>
         <h2>Add a New Idea</h2>
 
