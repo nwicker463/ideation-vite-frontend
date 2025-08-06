@@ -17,7 +17,7 @@ const conjunctivePhrases = [
 ];
 
 export default function IdeationGame() {
-  //const [groupId, setGroupId] = useState(() => localStorage.getItem('groupId'));
+  const [groupId, setGroupId] = useState(() => localStorage.getItem('groupId'));
   const [ideas, setIdeas] = useState([]);
   const [parentId, setParentId] = useState(null);
   const [content, setContent] = useState('');
@@ -32,7 +32,7 @@ export default function IdeationGame() {
   //const [userId, setUserId] = useState(() => localStorage.getItem('userId') || '');
   //const [userLabel, setUserLabel] = useState('');
   const [userId, setUserId] = useState(localStorage.getItem("userId"));
-  const [groupId, setGroupId] = useState(localStorage.getItem("groupId"));
+  // const [groupId, setGroupId] = useState(localStorage.getItem("groupId"));
   const [userLabel, setUserLabel] = useState(localStorage.getItem("userLabel"));
 
 
@@ -174,20 +174,21 @@ export default function IdeationGame() {
   }, []);
 
   const submitIdea = async () => {
-    if (!groupId) {
-      alert('Please select or create a group first.');
+    const storedGroupId = localStorage.getItem("groupId") || groupId;
+
+    if (!storedGroupId) {
+      alert("Please select or create a group first.");
       return;
     }
 
-    const fullContent = phrase ? `${phrase} ${content}` : content;
-
-    await fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${groupId}`, {
+    // Use storedGroupId in the fetch call
+    await fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${storedGroupId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         content,
         parentId,
-        label: userLabel // instead of userId
+        label: userLabel
       })
     });
 
