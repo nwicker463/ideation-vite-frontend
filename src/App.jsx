@@ -30,6 +30,7 @@ export default function IdeationGame() {
   const [timerActive, setTimerActive] = useState(false);
   const [userId, setUserId] = useState(() => localStorage.getItem("userId"));
   console.log("groupId 0:", localStorage.getItem("groupId"));
+  console.log("groupId 0.5:", groupId);
   const [groupId, setGroupId] = useState(() => localStorage.getItem("groupId")); //CHECK1
   console.log("groupId 1:", groupId);
   const [userLabel, setUserLabel] = useState(() => localStorage.getItem("userLabel"));
