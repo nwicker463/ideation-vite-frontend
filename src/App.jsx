@@ -262,7 +262,7 @@ const submitIdea = async () => {
 
   //possibly delete?
   //refresh timer when switching groups
-  /*useEffect(() => {
+  useEffect(() => {
     if (!groupId) return;
     const groupKey = `timer-${groupId}`;
     const stored = localStorage.getItem(groupKey);
@@ -271,7 +271,7 @@ const submitIdea = async () => {
 
     setTimeLeft(initial);
     setTimerActive(initial > 0);
-  }, [groupId]);*/
+  }, [groupId]);
 
   //resync states if they are null
   useEffect(() => {
