@@ -262,7 +262,7 @@ const submitIdea = async () => {
 
   //possibly delete?
   //refresh timer when switching groups
-  useEffect(() => {
+  /*useEffect(() => {
     if (!groupId) return;
     const groupKey = `timer-${groupId}`;
     const stored = localStorage.getItem(groupKey);
@@ -271,7 +271,7 @@ const submitIdea = async () => {
 
     setTimeLeft(initial);
     setTimerActive(initial > 0);
-  }, [groupId]);
+  }, [groupId]);*/
 
   //resync states if they are null
   useEffect(() => {
@@ -280,6 +280,18 @@ const submitIdea = async () => {
     console.log("groupId 4:", groupId);
     if (!userLabel) setUserLabel(localStorage.getItem("userLabel"));
   }, []);
+
+  //Rehydrate groupId
+  useEffect(() => {
+    const storedGroupId = localStorage.getItem('groupId');
+    if (storedGroupId) {
+      setGroupId(storedGroupId);
+      console.log("Rehydrated groupId from localStorage:", storedGroupId);
+    } else {
+      console.warn("No groupId found in localStorage");
+    }
+  }, []);
+
 
   const renderTree = (parentId = null, level = 0) => {
     return ideas
@@ -318,27 +330,6 @@ const submitIdea = async () => {
         );
       });
   };
-
-
-  /* const createGroup = async () => {
-    const name = prompt("Enter a name for the new group:");
-    if (!name) return;
-
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/groups`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name }),
-      });
-
-      const newGroup = await res.json();
-      setGroupId(newGroup.id); // Switch to new group
-    } catch (err) {
-      console.error('Failed to create group:', err);
-      alert('Group creation failed.');
-    }
-  }; */
-
 
   return (
     <div className="app-container">
