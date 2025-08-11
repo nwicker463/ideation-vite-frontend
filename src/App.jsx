@@ -29,16 +29,18 @@ export default function IdeationGame() {
   const [timeLeft, setTimeLeft] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
   const [userId, setUserId] = useState(() => localStorage.getItem("userId"));
-  console.log("groupId 0:", localStorage.getItem("groupId"));
   const [groupId, setGroupId] = useState(() => localStorage.getItem("groupId")); //CHECK1
-  console.log("groupId 0.5:", localStorage.getItem("groupId"));
-  console.log("groupId 1:", groupId);
   const [userLabel, setUserLabel] = useState(() => localStorage.getItem("userLabel"));
 
   console.log("userId:", userId);
   console.log("groupId:", groupId);
   console.log("userLabel:", userLabel);
 
+  //logging groupId
+  useEffect(() => {
+    console.log("groupId state after render:", groupId);
+    console.log("groupId in localStorage after render:", localStorage.getItem("groupId"));
+  }, [groupId]);
 
   useEffect(() => {
     if (!endTime) return;
@@ -285,14 +287,14 @@ const submitIdea = async () => {
 
   //Rehydrate groupId
   useEffect(() => {
-    const storedGroupId = localStorage.getItem('groupId');
-    if (storedGroupId) {
-      setGroupId(storedGroupId);
-      console.log("Rehydrated groupId from localStorage:", storedGroupId);
-    } else {
-      console.warn("No groupId found in localStorage");
+    if (!groupId) {
+      const stored = localStorage.getItem("groupId");
+      if (stored && stored !== "null") {
+        setGroupId(stored);
+      }
     }
-  }, []);
+  }, [groupId]);
+
 
 
   const renderTree = (parentId = null, level = 0) => {
