@@ -29,7 +29,8 @@ export default function IdeationGame() {
   const [timeLeft, setTimeLeft] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
   const [userId, setUserId] = useState(() => localStorage.getItem("userId"));
-  const [groupId, setGroupId] = useState(() => localStorage.getItem("groupId")); //CHECK
+  const [groupId, setGroupId] = useState(() => localStorage.getItem("groupId")); //CHECK1
+  console.log("groupId 1:", groupId);
   const [userLabel, setUserLabel] = useState(() => localStorage.getItem("userLabel"));
 
   console.log("userId:", userId);
@@ -74,20 +75,10 @@ export default function IdeationGame() {
   useEffect(() => {
     const saved = localStorage.getItem('groupId');
     if (saved) {
-      setGroupId(Number(saved)); //CHECK
+      setGroupId(Number(saved)); //CHECK2
+      console.log("groupId 2:", groupId);
     }
   }, []);
-
-  /* -------------------------------------------
-    Whenever groupId changes, persist it.
-  --------------------------------------------*/
-  /* useEffect(() => {
-    if (groupId !== null) {
-      localStorage.setItem('groupId', groupId); //CHECK
-    } else {
-      localStorage.removeItem('groupId');   // Optional: clear when null
-    }
-  }, [groupId]); */
 
   useEffect(() => {
     if (!groupId) return;
@@ -210,7 +201,8 @@ const submitIdea = async () => {
     fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
       .then(res => res.json())
       .then(data => {
-        setGroupId(data.group_id); //CHECK
+        setGroupId(data.group_id); //CHECK3
+        console.log("groupId 3:", groupId);
         setUserLabel(data.label);
         localStorage.setItem("userLabel", data.label);
       });
@@ -284,18 +276,10 @@ const submitIdea = async () => {
   //resync states if they are null
   useEffect(() => {
     if (!userId) setUserId(localStorage.getItem("userId"));
-    if (!groupId) setGroupId(localStorage.getItem("groupId")); //CHECK
+    if (!groupId) setGroupId(localStorage.getItem("groupId")); //CHECK4
+    console.log("groupId 4:", groupId);
     if (!userLabel) setUserLabel(localStorage.getItem("userLabel"));
   }, []);
-
-
-  /*const handleUnlock = () => {
-    localStorage.removeItem('groupId');
-    localStorage.removeItem('username');
-    setGroupId(null);
-    setUsername('');
-    setLocked(false);
-  }; */
 
   const renderTree = (parentId = null, level = 0) => {
     return ideas
