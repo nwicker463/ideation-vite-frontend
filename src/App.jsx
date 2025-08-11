@@ -17,7 +17,6 @@ const conjunctivePhrases = [
 ];
 
 export default function IdeationGame() {
-  //const [groupId, setGroupId] = useState(() => localStorage.getItem('groupId'));
   const [ideas, setIdeas] = useState([]);
   const [parentId, setParentId] = useState(null);
   const [content, setContent] = useState('');
@@ -29,13 +28,8 @@ export default function IdeationGame() {
   const [endTime, setEndTime] = useState(null);
   const [timeLeft, setTimeLeft] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
-  //const [userId, setUserId] = useState(() => localStorage.getItem('userId') || '');
-  //const [userLabel, setUserLabel] = useState('');
-  //const [userId, setUserId] = useState(localStorage.getItem("userId"));
-  // const [groupId, setGroupId] = useState(localStorage.getItem("groupId"));
-  //const [userLabel, setUserLabel] = useState(localStorage.getItem("userLabel"));
   const [userId, setUserId] = useState(() => localStorage.getItem("userId"));
-  const [groupId, setGroupId] = useState(() => localStorage.getItem("groupId"));
+  const [groupId, setGroupId] = useState(() => localStorage.getItem("groupId")); //CHECK
   const [userLabel, setUserLabel] = useState(() => localStorage.getItem("userLabel"));
 
   console.log("userId:", userId);
@@ -60,20 +54,6 @@ export default function IdeationGame() {
   }, [endTime]);
 
 
-  // Fetching starting time
-  /* useEffect(() => {
-    if (!groupId) return;
-
-    fetch(`${import.meta.env.VITE_API_URL}/api/groups/${groupId}/start`)
-      .then(res => res.json())
-      .then(data => {
-        const startTime = new Date(data.startTime);
-        const endTime = new Date(startTime.getTime() + 10 * 60 * 1000); // 10 minutes later
-        setEndTime(endTime);
-      })
-      .catch(err => console.error('Failed to fetch start time:', err));
-  }, [groupId]); */
-
   // Load saved username on mount
   useEffect(() => {
     const saved = localStorage.getItem('username');
@@ -94,20 +74,20 @@ export default function IdeationGame() {
   useEffect(() => {
     const saved = localStorage.getItem('groupId');
     if (saved) {
-      setGroupId(Number(saved));
+      setGroupId(Number(saved)); //CHECK
     }
   }, []);
 
   /* -------------------------------------------
     Whenever groupId changes, persist it.
   --------------------------------------------*/
-  useEffect(() => {
+  /* useEffect(() => {
     if (groupId !== null) {
-      localStorage.setItem('groupId', groupId);
+      localStorage.setItem('groupId', groupId); //CHECK
     } else {
       localStorage.removeItem('groupId');   // Optional: clear when null
     }
-  }, [groupId]);
+  }, [groupId]); */
 
   useEffect(() => {
     if (!groupId) return;
@@ -230,7 +210,7 @@ const submitIdea = async () => {
     fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
       .then(res => res.json())
       .then(data => {
-        setGroupId(data.group_id);
+        setGroupId(data.group_id); //CHECK
         setUserLabel(data.label);
         localStorage.setItem("userLabel", data.label);
       });
@@ -304,18 +284,18 @@ const submitIdea = async () => {
   //resync states if they are null
   useEffect(() => {
     if (!userId) setUserId(localStorage.getItem("userId"));
-    if (!groupId) setGroupId(localStorage.getItem("groupId"));
+    if (!groupId) setGroupId(localStorage.getItem("groupId")); //CHECK
     if (!userLabel) setUserLabel(localStorage.getItem("userLabel"));
   }, []);
 
 
-  const handleUnlock = () => {
+  /*const handleUnlock = () => {
     localStorage.removeItem('groupId');
     localStorage.removeItem('username');
     setGroupId(null);
     setUsername('');
     setLocked(false);
-  };
+  }; */
 
   const renderTree = (parentId = null, level = 0) => {
     return ideas
@@ -356,7 +336,7 @@ const submitIdea = async () => {
   };
 
 
-  const createGroup = async () => {
+  /* const createGroup = async () => {
     const name = prompt("Enter a name for the new group:");
     if (!name) return;
 
@@ -373,7 +353,7 @@ const submitIdea = async () => {
       console.error('Failed to create group:', err);
       alert('Group creation failed.');
     }
-  };
+  }; */
 
 
   return (
