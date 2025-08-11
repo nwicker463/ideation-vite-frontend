@@ -43,36 +43,6 @@ export default function IdeationGame() {
   console.log("userLabel:", userLabel);
 
 
-  //timer initialization
-  /* useEffect(() => {
-    if (!groupId) return;
-
-    const fetchTimer = async () => {
-      try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/groups/${groupId}/timer`);
-        const data = await res.json();
-
-        if (!data.timerStart) {
-          setTimerActive(false);
-          return;
-        }
-
-        const startTime = new Date(data.timerStart).getTime();
-        const now = Date.now();
-        const elapsed = Math.floor((now - startTime) / 1000); // in seconds
-        const duration = 600; // 10 minutes
-
-        const remaining = Math.max(0, duration - elapsed);
-        setTimeLeft(remaining);
-        setTimerActive(remaining > 0);
-      } catch (err) {
-        console.error('Failed to fetch group timer:', err);
-      }
-    };
-
-    fetchTimer();
-  }, [groupId]); */
-
   useEffect(() => {
     if (!endTime) return;
 
@@ -91,7 +61,7 @@ export default function IdeationGame() {
 
 
   // Fetching starting time
-  useEffect(() => {
+  /* useEffect(() => {
     if (!groupId) return;
 
     fetch(`${import.meta.env.VITE_API_URL}/api/groups/${groupId}/start`)
@@ -102,7 +72,7 @@ export default function IdeationGame() {
         setEndTime(endTime);
       })
       .catch(err => console.error('Failed to fetch start time:', err));
-  }, [groupId]);
+  }, [groupId]); */
 
   // Load saved username on mount
   useEffect(() => {
