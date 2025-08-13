@@ -136,6 +136,13 @@ const submitIdea = async () => {
     return;
   }
 
+  console.log('Submitting idea:', {
+    content,
+    parentId,
+    groupId,
+    userId
+  });
+
   const res = await fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${currentGroupId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
