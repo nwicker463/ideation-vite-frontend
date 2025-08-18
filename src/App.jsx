@@ -130,9 +130,15 @@ const submitIdea = async () => {
 
   const currentGroupId = groupId || localStorage.getItem("groupId");
   const currentUserLabel = userLabel || localStorage.getItem("userLabel");
+  const currentUserId = userId || localStorage.getItem("userId");
 
   if (!currentGroupId) {
     alert("Please select or create a group first.");
+    return;
+  }
+
+  if (!currentUserId) {
+    alert("No user ID.");
     return;
   }
 
