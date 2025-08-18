@@ -149,7 +149,7 @@ const submitIdea = async () => {
     body: JSON.stringify({
       content: contentToSubmit,
       parentId,
-      label: currentUserLabel
+      userId: currentUserId   // <-- send actual UUID, not label
     })
   });
 
