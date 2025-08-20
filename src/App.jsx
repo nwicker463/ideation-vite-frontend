@@ -248,14 +248,17 @@ const submitIdea = async () => {
 
   const sendMessage = async () => {
     if (!chatInput.trim() || !username || !groupId) return;
+    const currentGroupId = groupId || localStorage.getItem("groupId");
     const currentUserId = userId || localStorage.getItem("userId");
     const currentUserLabel = userLabel || localStorage.getItem("userLabel");
+
+    console.log({ chatContent, currentUserId, currentUserLabel });
 
     await fetch(`${import.meta.env.VITE_API_URL}/api/messages/group/${groupId}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        content,
+        content: chatContent,
         userId: currentUserId,
         username: currentUserLabel
       }),
