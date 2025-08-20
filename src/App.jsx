@@ -252,13 +252,13 @@ const submitIdea = async () => {
     const currentUserId = userId || localStorage.getItem("userId");
     const currentUserLabel = userLabel || localStorage.getItem("userLabel");
 
-    console.log({ chatContent, currentUserId, currentUserLabel });
+    console.log({ chatInput, currentUserId, currentUserLabel });
 
     await fetch(`${import.meta.env.VITE_API_URL}/api/messages/group/${groupId}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        content: chatContent,
+        content: chatInput,
         userId: currentUserId,
         username: currentUserLabel
       }),
