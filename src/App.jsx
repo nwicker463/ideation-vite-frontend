@@ -252,7 +252,11 @@ const submitIdea = async () => {
     await fetch(`${import.meta.env.VITE_API_URL}/api/messages/group/${groupId}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, content: chatInput }),
+      body: JSON.stringify({
+        content,
+        userId: currentUserId,
+        username: currentUserLabel
+      }),
     });
 
     setChatInput('');
