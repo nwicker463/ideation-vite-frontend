@@ -25,16 +25,14 @@ export default function Summary({ groupId }) {
           <thead>
             <tr>
               <th>User</th>
-              <th>Parent Ideas</th>
-              <th>Child Ideas</th>
+              <th>Total Ideas</th>
             </tr>
           </thead>
           <tbody>
             {summary.map(user => (
               <tr key={user.username}>
                 <td>{user.username}</td>
-                <td>{user.parent_count}</td>
-                <td>{user.child_count}</td>
+                <td>{user.idea_count}</td>
               </tr>
             ))}
           </tbody>
