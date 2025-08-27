@@ -95,7 +95,7 @@ export default function WaitingRoom() {
   // Logging and sending user to App
   useEffect(() => {
     let navigated = false;
-
+    if (!userId) return;
 
     const interval = setInterval(() => {
       fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
