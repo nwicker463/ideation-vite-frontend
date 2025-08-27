@@ -12,23 +12,25 @@ export default function WaitingRoom() {
   const [userId, setUserId] = useState(() => localStorage.getItem("userId") || null);
 
 
-
+  // On first mount, generate a new ID *only if one does not already exist*
   useEffect(() => {
-    // Check if Prolific ID is in the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const prolificId = urlParams.get("PROLIFIC_PID");
+    if (!userId) {
+      const prolificId = new URLSearchParams(window.location.search).get("PROLIFIC_PID");
+      const idToUse = prolificId || uuidv4();
 
-    const idToUse = prolificId || uuidv4(); // Use Prolific ID if exists, otherwise fallback
+      localStorage.setItem("userId", idToUse);
+      setUserId(idToUse);
 
-    //setLocalUserId(idToUse);
-    localStorage.setItem("userId", idToUse);
-    setUserId(idToUse);
+      // Post to backend waiting list once
+      fetch(`${import.meta.env.VITE_API_URL}/api/waiting`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: idToUse }),
+      }).catch(err => console.error("Failed to register user in waiting list:", err));
+    }
+  }, [userId]);
 
-    // Save in localStorage so it persists across refreshes
-    localStorage.setItem("userId", idToUse);
-  }, [setUserId]);
-
-  useEffect(() => {
+ /* useEffect(() => {
     if (!userId) return;
 
     let intervalId;
@@ -64,7 +66,7 @@ export default function WaitingRoom() {
           } catch (err) {
             console.error('Polling failed:', err);
           }
-        }, 2000);*/
+        }, 2000);
       } catch (err) {
         console.error('Error posting to waiting list:', err);
       }
@@ -73,7 +75,7 @@ export default function WaitingRoom() {
     addToWaitingList();
 
     return () => clearInterval(intervalId);
-  }, [userId, setGroupId, setLocked, navigate]);
+  }, [userId, setGroupId, setLocked, navigate]); */
 
   useEffect(() => {
     let navigated = false;
