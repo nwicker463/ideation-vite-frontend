@@ -9,6 +9,7 @@ export default function WaitingRoom() {
   const [isWaiting, setIsWaiting] = useState(true);
   const [locked, setLocked] = useState(false);
   const [userLabel, setUserLabel] = useState(null);
+  
 
 
   useEffect(() => {
@@ -19,11 +20,10 @@ export default function WaitingRoom() {
     const idToUse = prolificId || uuidv4(); // Use Prolific ID if exists, otherwise fallback
 
     setLocalUserId(idToUse);
-    setUserId(idToUse);
 
     // Save in localStorage so it persists across refreshes
     localStorage.setItem("userId", idToUse);
-  }, [setUserId]);
+  });
 
   useEffect(() => {
     if (!userId) return;
