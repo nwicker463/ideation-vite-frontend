@@ -1,14 +1,29 @@
+import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function WaitingRoom() {
-  const [userId] = useState(() => crypto.randomUUID()); // or MTurk ID
+  const [userId, setLocalUserId] = useState(null);
   const [groupId, setGroupId] = useState(null);
   const navigate = useNavigate();
   const [isWaiting, setIsWaiting] = useState(true);
   const [locked, setLocked] = useState(false);
   const [userLabel, setUserLabel] = useState(null);
 
+
+  useEffect(() => {
+    // Check if Prolific ID is in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const prolificId = urlParams.get("PROLIFIC_PID");
+
+    const idToUse = prolificId || uuidv4(); // Use Prolific ID if exists, otherwise fallback
+
+    setLocalUserId(idToUse);
+    setUserId(idToUse);
+
+    // Save in localStorage so it persists across refreshes
+    localStorage.setItem("userId", idToUse);
+  }, [setUserId]);
 
   useEffect(() => {
     if (!userId) return;
@@ -101,6 +116,8 @@ export default function WaitingRoom() {
     <div className="p-6">
       <h2 className="text-xl font-bold mb-4">Waiting for other participants...</h2>
       <p>You will be assigned to a group as soon as 2 more users join.</p>
+      <p></p>
+      <p>Please do not reload this page.</p>
     </div>
   );
 }
