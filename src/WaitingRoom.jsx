@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function WaitingRoom() {
-  const [userId, setLocalUserId] = useState(null);
+  //const [userId, setLocalUserId] = useState(null);
   const [groupId, setGroupId] = useState(null);
   const navigate = useNavigate();
   const [isWaiting, setIsWaiting] = useState(true);
   const [locked, setLocked] = useState(false);
   const [userLabel, setUserLabel] = useState(null);
-  
+  const [userId, setUserId] = useState(() => localStorage.getItem("userId") || null);
+
 
 
   useEffect(() => {
@@ -19,11 +20,13 @@ export default function WaitingRoom() {
 
     const idToUse = prolificId || uuidv4(); // Use Prolific ID if exists, otherwise fallback
 
-    setLocalUserId(idToUse);
+    //setLocalUserId(idToUse);
+    localStorage.setItem("userId", idToUse);
+    setUserId(idToUse);
 
     // Save in localStorage so it persists across refreshes
     localStorage.setItem("userId", idToUse);
-  });
+  }, [setUserId]);
 
   useEffect(() => {
     if (!userId) return;
