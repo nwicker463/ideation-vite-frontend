@@ -9,14 +9,15 @@ export default function WaitingRoom() {
   const [isWaiting, setIsWaiting] = useState(true);
   const [locked, setLocked] = useState(false);
   const [userLabel, setUserLabel] = useState(null);
-  const [userId, setUserId] = useState(() => localStorage.getItem("userId") || null);
+  //const [userId, setUserId] = useState(() => localStorage.getItem("userId") || null);
+  const [userId, setUserId] = useState(() => null);
 
   // On first mount, generate a new ID *only if one does not already exist*
   useEffect(() => {
     if (!userId) {
       const prolificId = new URLSearchParams(window.location.search).get("PROLIFIC_PID");
       const idToUse = prolificId || uuidv4();
-      localStorage.setItem("userId", idToUse);
+      //localStorage.setItem("userId", idToUse);
       setUserId(idToUse);
       // Post to backend waiting list once
       fetch(`${import.meta.env.VITE_API_URL}/api/waiting`, {
