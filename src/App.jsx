@@ -26,11 +26,11 @@ export default function IdeationGame() {
   const [locked, setLocked] = useState(localStorage.getItem('locked') === 'true');
   const [groups, setGroups] = useState([]);
   const [endTime, setEndTime] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
   const [userId, setUserId] = useState(() => localStorage.getItem("userId"));
   const [groupId, setGroupId] = useState(() => localStorage.getItem("groupId")); //CHECK1
   const [userLabel, setUserLabel] = useState(() => localStorage.getItem("userLabel"));
+  const [timeLeft, setTimeLeft] = useState(null);
 
   console.log("userId:", userId);
   console.log("groupId:", groupId);
@@ -316,7 +316,25 @@ const submitIdea = async () => {
       }
     }
   }, [groupId]);
+  
+  //fetching endtime for timer
+  useEffect(() => {
+    if (!groupId) return;
 
+    fetch(`${import.meta.env.VITE_API_URL}/api/groups/${groupId}/time`)
+      .then(res => res.json())
+      .then(data => {
+        const { endTime } = data;
+        const interval = setInterval(() => {
+          const now = Date.now();
+          const diff = endTime - now;
+          setTimeLeft(Math.max(0, diff));
+        }, 1000);
+
+        return () => clearInterval(interval);
+      })
+      .catch(err => console.error('Failed to fetch group time:', err));
+  }, [groupId]);
 
 
   const renderTree = (parentId = null, level = 0) => {
@@ -370,13 +388,18 @@ const submitIdea = async () => {
       Start Timer
     </Button> */}
 
-    <div className="text-xl font-semibold">
+    {/*<div className="text-xl font-semibold">
       Time Left: {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}
 
       {!timerActive && (
         <p className="text-red-600 mt-2">Time's up! You can no longer submit ideas.</p>
       )}
 
+    </div>*/}
+
+    <div>
+      Time left: {Math.floor(timeLeft / 1000 / 60)}:
+                {(Math.floor(timeLeft / 1000) % 60).toString().padStart(2, '0')}
     </div>
 
     <div className="content-grid">
