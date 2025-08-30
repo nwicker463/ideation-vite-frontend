@@ -100,8 +100,8 @@ export default function IdeationGame() {
           }
         })
         .catch(err => {
-          console.error('Failed to fetch ideas:', err);
-          setIdeas([]);
+          console.error("Error fetching ideas:", err.message, err.stack);
+          res.status(500).json({ error: err.message });
         });
       };
 
