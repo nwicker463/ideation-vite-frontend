@@ -44,7 +44,7 @@
 }
 
 body {
-  background-color: #f8f9fa;
+  background-color: green;
   font-family: system-ui, sans-serif;
   margin: 0;
   padding: 0;
@@ -54,7 +54,7 @@ body {
   width: 100%;
   max-width: none;
   padding: 2rem;
-  background: #ffffff;
+  background: red;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
   box-sizing: border-box;
@@ -93,7 +93,7 @@ input, select, textarea {
 
 button {
   background-color: #AA7bff;
-  color: black;
+  color: magenta;
   border: none;
   padding: 0.6rem 1rem;
   font-size: 1rem;
