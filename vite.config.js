@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 import path from 'path';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
@@ -11,10 +11,15 @@ export default defineConfig({
       'react-dom': path.resolve('./node_modules/react-dom')
     }
   },
+  build: {
+    rollupOptions: {
+      external: ["fsevents"], // 👈 explicitly mark fsevents as external
+    },
+  },
   optimizeDeps: {
-    exclude: ['fsevents'],
+    exclude: ["fsevents"],
   },
   ssr: {
-    noExternal: ['fsevents'],
+    noExternal: ["fsevents"],
   },
 });
