@@ -10,5 +10,11 @@ export default defineConfig({
       react: path.resolve('./node_modules/react'),        // ✅ de-dupe React
       'react-dom': path.resolve('./node_modules/react-dom')
     }
-  }
+  },
+  optimizeDeps: {
+    exclude: ['fsevents'],
+  },
+  ssr: {
+    noExternal: ['fsevents'],
+  },
 });
