@@ -470,4 +470,3 @@ const submitIdea = async () => {
 
   );
 }
-//test
