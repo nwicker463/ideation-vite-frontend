@@ -13,13 +13,13 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ["fsevents"], // 👈 explicitly mark fsevents as external
+      external: ["rollup","fsevents"], // 👈 explicitly mark fsevents as external
     },
   },
   optimizeDeps: {
-    exclude: ["fsevents"],
+    exclude: ["rollup","fsevents"],
   },
   ssr: {
-    noExternal: ["fsevents"],
+    noExternal: ["rollup","fsevents"],
   },
 });
