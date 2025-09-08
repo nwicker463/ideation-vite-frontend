@@ -439,7 +439,7 @@ const submitIdea = async () => {
             placeholder="Enter your idea..."
           />
         </div>
-        <Button onClick={submitIdea} disabled={!timerActive}>
+        <Button onClick={submitIdea} disabled={!timerActive} className={'unselected-button'}>
           Submit Idea
         </Button>
       </div>
