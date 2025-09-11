@@ -146,7 +146,7 @@ button:hover {
 
 .chat-box {
   flex: 1;
-  border-left: 1px solid #ccc;
+  /*border-left: 1px solid #ccc;*/
   padding-left: 1rem;
   display: flex;
   flex-direction: column;

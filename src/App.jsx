@@ -380,24 +380,7 @@ const submitIdea = async () => {
     <div className="app-container">
     <h1>Ideation Game</h1>
     <Link to="/summary">View Summary</Link>
-    {/*<Button onClick={async () => {
-      await fetch(`${import.meta.env.VITE_API_URL}/api/groups/${groupId}/timer/start`, {
-        method: 'POST'
-      });
-      window.location.reload(); // re-fetch and re-sync the timer
-    }}>
-      Start Timer
-    </Button> */}
-
-    {/*<div className="text-xl font-semibold">
-      Time Left: {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}
-
-      {!timerActive && (
-        <p className="text-red-600 mt-2">Time's up! You can no longer submit ideas.</p>
-      )}
-
-    </div>*/}
-
+    <h2>Here is where the paragraph with the prompt will be. Ex: You are tasked with finding a use for a house on campus. Blah Blah Blah. etc etc etc.</h2>
     <div>
       Time left: {Math.floor(timeLeft / 1000 / 60)}:
                 {(Math.floor(timeLeft / 1000) % 60).toString().padStart(2, '0')}
@@ -419,8 +402,6 @@ const submitIdea = async () => {
           <p>Label: {userLabel || localStorage.getItem("userLabel")}</p>
         </div>
         <h2>Add a New Idea</h2>
-
-        {/* <button onClick={createGroup}>Create New Group</button> */}
 
         <div className="input-group">
           <label>Conjunctive Phrase</label>
