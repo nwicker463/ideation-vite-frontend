@@ -437,6 +437,7 @@ const submitIdea = async () => {
             value={content}
             onChange={e => setContent(e.target.value)}
             placeholder="Enter your idea..."
+            className="idea-textarea"
           />
         </div>
         <Button onClick={submitIdea} disabled={!timerActive} className={'unselected-button'}>
@@ -459,7 +460,6 @@ const submitIdea = async () => {
           value={chatInput}
           onChange={e => setChatInput(e.target.value)}
           placeholder="Type a message..."
-          className="idea-textarea"
         />
         <button onClick={sendMessage}>Send</button>
       </div>
