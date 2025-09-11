@@ -172,8 +172,8 @@ html, body {
 }
 
 .idea-textarea {
-  width: 100%;          /* Fit within parent container */
-  max-width: 600px;     /* Prevent it from stretching too far */
+  width: 50%;          /* Fit within parent container */
+  max-width: 300px;     /* Prevent it from stretching too far */
   display: block;       /* Make sure it respects width */
   margin: 0 auto;       /* Center it if needed */
   padding: 8px;
