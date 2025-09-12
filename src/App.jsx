@@ -248,7 +248,7 @@ const submitIdea = async () => {
   }, [groupId]);
 
   const sendMessage = async () => {
-    if (!chatInput.trim() || !username || !groupId) return;
+    if (!chatInput.trim() || !groupId) return;
     const currentGroupId = groupId || localStorage.getItem("groupId");
     const currentUserId = userId || localStorage.getItem("userId");
     const currentUserLabel = userLabel || localStorage.getItem("userLabel");
@@ -432,7 +432,7 @@ const submitIdea = async () => {
           {Array.isArray(messages) &&
             messages.map(msg => (
               <p key={msg.id}>
-                <strong>{msg.username}:</strong> {msg.content}
+                <strong>{msg.contributor_label}:</strong> {msg.content}
               </p>
             ))}
 
