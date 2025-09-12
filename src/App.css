@@ -157,6 +157,7 @@ button:hover {
   min-height: 100px;
   max-height: 300px;
   overflow-y: auto;
+  text-align: left;
 }
 
 .chat-box textarea {
@@ -173,7 +174,7 @@ html, body {
 }
 
 .idea-textarea {
-  width: 50%;          /* Fit within parent container */
+  width: 75%;          /* Fit within parent container */
   max-width: 300px;     /* Prevent it from stretching too far */
   display: block;       /* Make sure it respects width */
   margin: 0 auto;       /* Center it if needed */
