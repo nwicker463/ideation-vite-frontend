@@ -426,7 +426,7 @@ const submitIdea = async () => {
         </Button>
       </div>
 
-      <div className="chat-box">
+      <div /*className="chat-box"*/className="idea-form">
         <h2>Group Chat</h2>
         <div className="chat-messages">
           {Array.isArray(messages) &&
