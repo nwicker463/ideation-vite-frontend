@@ -98,6 +98,7 @@ button:hover {
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 6px;
+  text-align: left;
 }
 
 .child-indent {
@@ -174,7 +175,7 @@ html, body {
 }
 
 .idea-textarea {
-  width: 75%;          /* Fit within parent container */
+  width: 90%;          /* Fit within parent container */
   max-width: 300px;     /* Prevent it from stretching too far */
   display: block;       /* Make sure it respects width */
   margin: 0 auto;       /* Center it if needed */
