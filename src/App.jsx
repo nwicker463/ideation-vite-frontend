@@ -441,6 +441,7 @@ const submitIdea = async () => {
           value={chatInput}
           onChange={e => setChatInput(e.target.value)}
           placeholder="Type a message..."
+          className="idea-textarea"
         />
         <button onClick={sendMessage} className={'unselected-button'}>Send</button>
       </div>
