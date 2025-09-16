@@ -20,7 +20,7 @@ body {
   padding: 0;
 }
 
-/*.app-container {
+.app-container {
   width: 100%;
   max-width: none;
   padding: 2rem;
@@ -28,16 +28,6 @@ body {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
   box-sizing: border-box;
-}*/
-
-/* App container fills screen and centers column */
-.app-container {
-  display: flex;
-  justify-content: center; /* horizontally center */
-  align-items: flex-start; /* top aligned, can change to center */
-  min-height: 100vh; /* take full screen height */
-  padding: 20px;
-  background: #f9f9f9; /* light background */
 }
 
 /* Main column fixed width */
