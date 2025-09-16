@@ -410,9 +410,6 @@ const submitIdea = async () => {
               <option key={p} value={p}>{p || '[None]'}</option>
             ))}
           </select>
-        </div>
-
-        <div className="input-group">
           <label>Your Idea</label>
           <textarea
             value={content}
@@ -428,7 +425,7 @@ const submitIdea = async () => {
 
       <div /*className="chat-box"*/className="idea-form">
         <h2>Group Chat</h2>
-        <div className="chat-messages">
+        <div className="chat-messages">{/*className="input-group"*/}
           {Array.isArray(messages) &&
             messages.map(msg => (
               <p key={msg.id}>
@@ -437,16 +434,15 @@ const submitIdea = async () => {
             ))}
 
         </div>
-        <textarea
-          value={chatInput}
-          onChange={e => setChatInput(e.target.value)}
-          placeholder="Type a message..."
-          className="idea-textarea"
-        />
-        <button onClick={sendMessage} className={'unselected-button'}>Send</button>
+          <textarea
+            value={chatInput}
+            onChange={e => setChatInput(e.target.value)}
+            placeholder="Type a message..."
+            className="idea-textarea"
+          />
+          <button onClick={sendMessage} className={'unselected-button'}>Send</button>
+        </div>
       </div>
     </div>
-  </div>
-
   );
 }
