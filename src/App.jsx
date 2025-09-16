@@ -394,7 +394,8 @@ const submitIdea = async () => {
       </div>
 
       {/* Middle Column: Form */}
-      <div className="idea-form">
+      {/*<div className="idea-form">*/}
+      <div className= "main-column">
         {/*Locked Group Stuff*/}
         <div>
           <p>User ID: {userId || localStorage.getItem("userId")}</p>
