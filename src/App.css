@@ -30,12 +30,6 @@ body {
   box-sizing: border-box;
 }
 
-/* Main column fixed width */
-.main-column {
-  width: 600px;      /* or whatever size fits */
-  max-width: 90%;    /* responsive for small screens */
-}
-
 h1 {
   font-size: 2rem;
   color: #333;
@@ -51,6 +45,8 @@ h2 {
 
 .input-group {
   margin-bottom: 1rem;
+  flex: 2;  /* main takes more space */
+  max-width: 600px;
 }
 
 .input-group label {
@@ -159,6 +155,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   max-height: 600px;
+  margin-bottom: 1rem;
 }
 
 .chat-messages {
@@ -189,4 +186,5 @@ html, body {
   padding: 8px;
   font-size: 16px;
   box-sizing: border-box;
+  margin-bottom: 1rem;
 }

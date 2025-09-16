@@ -394,8 +394,7 @@ const submitIdea = async () => {
       </div>
 
       {/* Middle Column: Form */}
-      {/*<div className="idea-form">*/}
-      <div className= "main-column">
+      <div className="idea-form">
         {/*Locked Group Stuff*/}
         <div>
           <p>User ID: {userId || localStorage.getItem("userId")}</p>
@@ -424,7 +423,7 @@ const submitIdea = async () => {
         </Button>
       </div>
 
-      <div /*className="chat-box"*/className="idea-form">
+      <div className="chat-box">
         <h2>Group Chat</h2>
         <div className="input-group">{/*className="input-group"*/}
           {Array.isArray(messages) &&
