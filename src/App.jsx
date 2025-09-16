@@ -425,7 +425,7 @@ const submitIdea = async () => {
 
       <div /*className="chat-box"*/className="idea-form">
         <h2>Group Chat</h2>
-        <div className="chat-messages">{/*className="input-group"*/}
+        <div className="input-group">{/*className="input-group"*/}
           {Array.isArray(messages) &&
             messages.map(msg => (
               <p key={msg.id}>
