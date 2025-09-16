@@ -84,6 +84,7 @@ button:hover {
 .unselected-button {
   background-color: rgb(87, 160, 255);
   color: white;
+  padding: 1rem;
 }
 
 .selected-button:hover,
