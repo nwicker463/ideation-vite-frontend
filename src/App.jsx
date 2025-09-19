@@ -273,7 +273,7 @@ export default function IdeationGame() {
 
 
   // Refresh timer when switching groups
-  useEffect(() => {
+  /*useEffect(() => {
     if (!groupId) return;
     const groupKey = `timer-${groupId}`;
     const stored = localStorage.getItem(groupKey);
@@ -282,9 +282,9 @@ export default function IdeationGame() {
 
     setTimeLeft(initial);
     setTimerActive(initial > 0);
-  }, [groupId]);
+  }, [groupId]);*/
 
-  //resync states if they are null
+  // Resync states if they are null
   useEffect(() => {
     if (!userId) setUserId(localStorage.getItem("userId"));
     if (!groupId) setGroupId(localStorage.getItem("groupId")); //CHECK4
@@ -292,7 +292,7 @@ export default function IdeationGame() {
     if (!userLabel) setUserLabel(localStorage.getItem("userLabel"));
   }, []);
 
-  //Rehydrate groupId
+  // Rehydrate groupId
   useEffect(() => {
     if (!groupId) {
       const stored = localStorage.getItem("groupId");
@@ -302,7 +302,7 @@ export default function IdeationGame() {
     }
   }, [groupId]);
   
-  //fetching endtime for timer
+  // Fetching endtime for timer
   useEffect(() => {
     if (!groupId) return;
 
@@ -321,7 +321,7 @@ export default function IdeationGame() {
       .catch(err => console.error('Failed to fetch group time:', err));
   }, [groupId]);
 
-
+  // Render idea tree
   const renderTree = (parentId = null, level = 0) => {
     return ideas
       .filter(idea => idea.parent_id === parentId)
