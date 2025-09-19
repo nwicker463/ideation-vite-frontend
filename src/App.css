@@ -47,10 +47,22 @@ h2 {
   margin-bottom: 1rem;
   flex: 2;  /* main takes more space */
   max-width: 600px;
-  text-align: left;
 }
 
 .input-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.chat-input-group {
+  margin-bottom: 1rem;
+  flex: 2;  /* main takes more space */
+  max-width: 600px;
+  text-align: left;
+}
+
+.chat-input-group label {
   display: block;
   font-weight: bold;
   margin-bottom: 0.5rem;
