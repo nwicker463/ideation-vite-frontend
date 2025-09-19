@@ -419,7 +419,7 @@ const submitIdea = async () => {
           />
         </div>
         <Button onClick={submitIdea} disabled={!timerActive} className={'unselected-button'}>
-          Submit Idea
+          Submit
         </Button>
       </div>
 
