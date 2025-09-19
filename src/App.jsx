@@ -379,7 +379,7 @@ const submitIdea = async () => {
   return (
     <div className="app-container">
     <h1>Ideation Game</h1>
-    <Link to="/summary">View Summary</Link>
+    {/*<Link to="/summary">View Summary</Link>*/}
     <h2>Here is where the paragraph with the prompt will be. Ex: You are tasked with finding a use for a house on campus. Blah Blah Blah. etc etc etc.</h2>
     <div>
       Time left: {Math.floor(timeLeft / 1000 / 60)}:
@@ -397,8 +397,8 @@ const submitIdea = async () => {
       <div className="idea-form">
         {/*Locked Group Stuff*/}
         <div>
-          <p>User ID: {userId || localStorage.getItem("userId")}</p>
-          <p>Group ID: {groupId || localStorage.getItem("groupId")}</p>
+          {/*<p>User ID: {userId || localStorage.getItem("userId")}</p>*/}
+          {/*<p>Group ID: {groupId || localStorage.getItem("groupId")}</p>*/}
           <p>Label: {userLabel || localStorage.getItem("userLabel")}</p>
         </div>
         <h2>Add a New Idea</h2>
