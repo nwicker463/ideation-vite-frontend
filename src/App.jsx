@@ -23,7 +23,6 @@ export default function IdeationGame() {
   const [phrase, setPhrase] = useState('');
   const [collapsedNodes, setCollapsedNodes] = useState({});
   const [username, setUsername] = useState(() => localStorage.getItem('userId') || '');
-  const [locked, setLocked] = useState(localStorage.getItem('locked') === 'true');
   const [groups, setGroups] = useState([]);
   const [endTime, setEndTime] = useState(null);
   const [timerActive, setTimerActive] = useState(false);
@@ -60,7 +59,7 @@ export default function IdeationGame() {
 
 
   // Load saved username on mount
-  useEffect(() => {
+  /*useEffect(() => {
     const saved = localStorage.getItem('username');
     if (saved) setUsername(saved);
   }, []);
@@ -70,7 +69,7 @@ export default function IdeationGame() {
     if (username) {
       localStorage.setItem('username', username);
     }
-  }, [username]);
+  }, [username]);*/
 
   /* -------------------------------------------
     Load a saved groupId (if present) exactly
