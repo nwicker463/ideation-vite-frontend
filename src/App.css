@@ -47,12 +47,14 @@ h2 {
   margin-bottom: 1rem;
   flex: 2;  /* main takes more space */
   max-width: 600px;
+  text-align: left;
 }
 
 .input-group label {
   display: block;
   font-weight: bold;
   margin-bottom: 0.5rem;
+  text-align: left;
 }
 
 input, select, textarea {
@@ -168,7 +170,7 @@ button:hover {
 .chat-box textarea {
   height: 60px;
   resize: none;
-  text-align: left;
+  /*text-align: left;*/
 }
 
 html, body {
