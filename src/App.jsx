@@ -6,7 +6,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import './App.css';
 import { Link } from 'react-router-dom';
-//Test
 
 const conjunctivePhrases = [
   '',
@@ -36,11 +35,12 @@ export default function IdeationGame() {
   console.log("userLabel:", userLabel);
 
   //logging groupId
-  useEffect(() => {
+  /*useEffect(() => {
     console.log("groupId state after render:", groupId);
     console.log("groupId in localStorage after render:", localStorage.getItem("groupId"));
-  }, [groupId]);
+  }, [groupId]);*/
 
+  // Setting time left
   useEffect(() => {
     if (!endTime) return;
 
@@ -58,23 +58,7 @@ export default function IdeationGame() {
   }, [endTime]);
 
 
-  // Load saved username on mount
-  /*useEffect(() => {
-    const saved = localStorage.getItem('username');
-    if (saved) setUsername(saved);
-  }, []);
-
-  // Save username on change
-  useEffect(() => {
-    if (username) {
-      localStorage.setItem('username', username);
-    }
-  }, [username]);*/
-
-  /* -------------------------------------------
-    Load a saved groupId (if present) exactly
-    once when the component first mounts.
-  --------------------------------------------*/
+  // Load a saved groupId when the component first mounts
   useEffect(() => {
     const saved = localStorage.getItem('groupId');
     if (saved) {
@@ -83,7 +67,7 @@ export default function IdeationGame() {
     }
   }, []);
 
-  //Polling for ideas?
+  // Polling for ideas
   useEffect(() => {
     if (!groupId) return;
 
@@ -114,7 +98,7 @@ export default function IdeationGame() {
     return () => clearInterval(interval);
   }, [groupId]);
 
-  /* Fetching groups*/
+  // Fetching groups
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/groups`)
       .then((res) => res.json())
@@ -125,48 +109,48 @@ export default function IdeationGame() {
       });
   }, []);
 
-const submitIdea = async () => {
-  const contentToSubmit = phrase ? `${phrase} ${content}` : content;
+  // Submit an idea
+  const submitIdea = async () => {
+    const contentToSubmit = phrase ? `${phrase} ${content}` : content;
+    const currentGroupId = groupId || localStorage.getItem("groupId");
+    const currentUserLabel = userLabel || localStorage.getItem("userLabel");
+    const currentUserId = userId || localStorage.getItem("userId");
 
-  const currentGroupId = groupId || localStorage.getItem("groupId");
-  const currentUserLabel = userLabel || localStorage.getItem("userLabel");
-  const currentUserId = userId || localStorage.getItem("userId");
+    if (!currentGroupId) {
+      alert("Please select or create a group first.");
+      return;
+    }
 
-  if (!currentGroupId) {
-    alert("Please select or create a group first.");
-    return;
-  }
+    if (!currentUserId) {
+      alert("No user ID.");
+      return;
+    }
 
-  if (!currentUserId) {
-    alert("No user ID.");
-    return;
-  }
-
-  console.log('Submitting idea:', {
-    content,
-    parentId,
-    groupId,
-    userId
-  });
-
-  const res = await fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${currentGroupId}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      content: contentToSubmit,
+    console.log('Submitting idea:', {
+      content,
       parentId,
-      userId: currentUserId   // <-- send actual UUID, not label
-    })
-  });
+      groupId,
+      userId
+    });
 
-  if (res.ok) {
-    setContent('');
-    setPhrase('');
-    setParentId(null);
-  }
-};
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${currentGroupId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        content: contentToSubmit,
+        parentId,
+        userId: currentUserId
+      })
+    });
 
+    if (res.ok) {
+      setContent('');
+      setPhrase('');
+      setParentId(null);
+    }
+  };
 
+  // Toggle node collapse
   const toggleCollapse = (id) => {
     setCollapsedNodes(prev => ({
       ...prev,
@@ -186,10 +170,12 @@ const submitIdea = async () => {
     }
   }, []);
 
+  // Set content of collapsed node
   useEffect(() => {
     localStorage.setItem('collapsedNodes', JSON.stringify(collapsedNodes));
   }, [collapsedNodes]);
 
+  // Get the current chosen phrase
   useEffect(() => {
     const savedPhrase = localStorage.getItem('phrase');
     if (savedPhrase !== null) {
@@ -197,10 +183,12 @@ const submitIdea = async () => {
     }
   }, []);
 
+  // Set phrase
   useEffect(() => {
     localStorage.setItem('phrase', phrase);
   }, [phrase]);
 
+  // Get current idea content
   useEffect(() => {
     const savedContent = localStorage.getItem('ideaContent');
     if (savedContent !== null) {
@@ -208,6 +196,7 @@ const submitIdea = async () => {
     }
   }, []);
 
+  // Set content
   useEffect(() => {
     localStorage.setItem('ideaContent', content);
   }, [content]);
@@ -239,21 +228,18 @@ const submitIdea = async () => {
           console.error('Chat fetch error:', err);
           setMessages([]); // keep it an array on error
         });
-
-
     fetchMessages();
     const interval = setInterval(fetchMessages, 3000);
     return () => clearInterval(interval);
   }, [groupId]);
 
+  // Post chat message
   const sendMessage = async () => {
     if (!chatInput.trim() || !groupId) return;
     const currentGroupId = groupId || localStorage.getItem("groupId");
     const currentUserId = userId || localStorage.getItem("userId");
     const currentUserLabel = userLabel || localStorage.getItem("userLabel");
-
     console.log({ chatInput, currentUserId, currentUserLabel });
-
     await fetch(`${import.meta.env.VITE_API_URL}/api/messages/group/${groupId}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -263,12 +249,11 @@ const submitIdea = async () => {
         username: currentUserLabel
       }),
     });
-
     setChatInput('');
   };
 
-  //possibly delete?
-  //countdown logic
+
+  // Countdown logic
     useEffect(() => {
     if (!timerActive) return;
 
@@ -286,8 +271,8 @@ const submitIdea = async () => {
     return () => clearInterval(interval);
   }, [timerActive]);
 
-  //possibly delete?
-  //refresh timer when switching groups
+
+  // Refresh timer when switching groups
   useEffect(() => {
     if (!groupId) return;
     const groupKey = `timer-${groupId}`;
