@@ -35,10 +35,10 @@ export default function IdeationGame() {
   console.log("userLabel:", userLabel);
 
   //logging groupId
-  /*useEffect(() => {
+  useEffect(() => {
     console.log("groupId state after render:", groupId);
     console.log("groupId in localStorage after render:", localStorage.getItem("groupId"));
-  }, [groupId]);*/
+  }, [groupId]);
 
   // Setting time left
   useEffect(() => {
@@ -273,7 +273,7 @@ export default function IdeationGame() {
 
 
   // Refresh timer when switching groups
-  /*useEffect(() => {
+  useEffect(() => {
     if (!groupId) return;
     const groupKey = `timer-${groupId}`;
     const stored = localStorage.getItem(groupKey);
@@ -282,7 +282,7 @@ export default function IdeationGame() {
 
     setTimeLeft(initial);
     setTimerActive(initial > 0);
-  }, [groupId]);*/
+  }, [groupId]);
 
   // Resync states if they are null
   useEffect(() => {
