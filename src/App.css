@@ -92,8 +92,8 @@ button:hover {
 }
 
 .selected-button {
-  background-color: #2d6cdf; /* blue */
-  color: red;
+  background-color: rgb(87, 160, 255);
+  color: white;
 }
 
 /* Idea tree buttons*/
