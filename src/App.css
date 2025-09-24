@@ -96,12 +96,14 @@ button:hover {
   background-color: rgb(87, 160, 255);
   color: white;
   height: 40px;
+  width: 120px;
 }
 
 .unselected-button {
   background-color: rgb(87, 160, 255);
   color: white;
   height: 40px;
+  width: 120px;
 }
 
 .selected-button:hover,

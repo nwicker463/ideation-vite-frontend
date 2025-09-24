@@ -23,7 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<WaitingRoom />} />
-        <Route path="/login" element={<Login />} />
+        {/*<Route path="/login" element={<Login />} />*/}
         <Route path="/app" element={<ProtectedApp />} />
         <Route path="/summary" element={<Summary />} />
         <Route path="*" element={<Navigate to="/app" />} />
