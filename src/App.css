@@ -95,19 +95,13 @@ button:hover {
 .selected-button {
   background-color: rgb(87, 160, 255);
   color: white;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 140px;
+  height: 40px;
 }
 
 .unselected-button {
   background-color: rgb(87, 160, 255);
   color: white;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 140px;
+  height: 40px;
 }
 
 .selected-button:hover,
