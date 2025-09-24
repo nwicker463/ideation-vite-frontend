@@ -322,12 +322,11 @@ export default function IdeationGame() {
   }, [groupId]);
 
   // Render idea tree
-  const renderTree = (parentId = null, level = 0) => {
+  const renderTree = (currentParentId = null, level = 0) => {
     return ideas
-      .filter(idea => idea.parent_id === parentId)
+      .filter(idea => idea.parent_id === currentParentId)
       .map(idea => {
         const isCollapsed = collapsedNodes[idea.id];
-
         return (
           <div key={idea.id} className="child-indent" style={{ marginLeft: `${level * 20}px` }}>
             <div className={parentId === idea.id ? "idea-card-selected" : "idea-card"}>
@@ -350,10 +349,8 @@ export default function IdeationGame() {
                 >
                   {parentId === idea.id ? "Cancel" : "Build On"}
                 </Button>
-
               </div>
             </div>
-
             {!isCollapsed && renderTree(idea.id, level + 1)}
           </div>
         );
