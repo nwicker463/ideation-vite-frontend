@@ -87,6 +87,7 @@ button {
   cursor: pointer;
 }
 
+/* Idea tree buttons*/
 button:hover {
   background-color: #0056b3;
 }
@@ -94,12 +95,19 @@ button:hover {
 .selected-button {
   background-color: rgb(87, 160, 255);
   color: white;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 140px;
 }
 
-/* Idea tree buttons*/
 .unselected-button {
   background-color: rgb(87, 160, 255);
   color: white;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 140px;
 }
 
 .selected-button:hover,
