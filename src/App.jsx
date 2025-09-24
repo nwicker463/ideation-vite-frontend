@@ -330,7 +330,7 @@ export default function IdeationGame() {
 
         return (
           <div key={idea.id} className="child-indent" style={{ marginLeft: `${level * 20}px` }}>
-            <div className="idea-card">
+            <div className={parentId === idea.id ? "idea-card-selected" : "idea-card"}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <p style={{ margin: 0 }}>
                   <span
