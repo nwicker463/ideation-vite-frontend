@@ -367,6 +367,10 @@ export default function IdeationGame() {
                 {(Math.floor(timeLeft / 1000) % 60).toString().padStart(2, '0')}
     </div>
 
+    if (!timerActive) {
+      <a href="https://www.google.com/">Next Part of Study</a>
+    }
+
     <div className="content-grid">
       {/* Left Column: Idea Tree */}
       <div className="idea-tree">
