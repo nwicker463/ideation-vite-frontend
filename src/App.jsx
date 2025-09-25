@@ -362,15 +362,19 @@ export default function IdeationGame() {
     <h1>Ideation Game</h1>
     {/*<Link to="/summary">View Summary</Link>*/}
     <h2>Here is where the paragraph with the prompt will be. Ex: You are tasked with finding a use for a house on campus. Blah Blah Blah. etc etc etc.</h2>
+    <div>
+      Time left: {Math.floor(timeLeft / 1000 / 60)}:
+                {(Math.floor(timeLeft / 1000) % 60).toString().padStart(2, '0')}
+    </div>
     <div className="text-center mt-6">
       {timeLeft > 0 ? (
         <p className="text-lg font-bold">
-          Time remaining: {Math.floor(timeLeft / 60)}:
-          {String(timeLeft % 60).padStart(2, "0")}
+          Time left: {Math.floor(timeLeft / 1000 / 60)}:
+                {(Math.floor(timeLeft / 1000) % 60).toString().padStart(2, '0')}
         </p>
       ) : (
         <a
-          href="https://www.google.com/"
+          href="https://app.prolific.co/submissions/complete?cc=XXXXXXX"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 underline font-bold"
