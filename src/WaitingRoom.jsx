@@ -10,6 +10,7 @@ export default function WaitingRoom() {
   const [userLabel, setUserLabel] = useState(null);
   const [userId, setUserId] = useState(() => null);
   const navigatedRef = useRef(false);
+  const intervalRef = useRef(null);
 
   // On first mount, generate a new ID *only if one does not already exist*
   useEffect(() => {
