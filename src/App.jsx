@@ -408,11 +408,10 @@ export default function IdeationGame() {
               <option key={p} value={p}>{p || '[None]'}</option>
             ))}
           </select>
-          <label>Your Idea</label>
           <textarea
             value={content}
             onChange={e => setContent(e.target.value)}
-            placeholder="Enter your idea..."
+            placeholder="..."
             className="idea-textarea"
           />
         </div>
