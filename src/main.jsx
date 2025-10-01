@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import App from './App.jsx';
 import Summary from './Summary.jsx';
-import Login from './Login.jsx';
+/*import Login from './Login.jsx';*/
 import WaitingRoom from './WaitingRoom';
 import './index.css';
 
@@ -23,7 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<WaitingRoom />} />
-        <Route path="/login" element={<Login />} />
+        {/*<Route path="/login" element={<Login />} />*/}
         <Route path="/app" element={<ProtectedApp />} />
         <Route path="/summary" element={<Summary />} />
         <Route path="*" element={<Navigate to="/app" />} />

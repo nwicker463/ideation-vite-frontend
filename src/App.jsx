@@ -362,10 +362,10 @@ export default function IdeationGame() {
     <h1>Ideation Game</h1>
     {/*<Link to="/summary">View Summary</Link>*/}
     <h2>Here is where the paragraph with the prompt will be. Ex: You are tasked with finding a use for a house on campus. Blah Blah Blah. etc etc etc.</h2>
-    <div>
+    {/*<div>
       Time left: {Math.floor(timeLeft / 1000 / 60)}:
                 {(Math.floor(timeLeft / 1000) % 60).toString().padStart(2, '0')}
-    </div>
+    </div>*/}
     <div className="text-center mt-6">
       {timeLeft > 0 ? (
         <p className="text-lg font-bold">
@@ -399,7 +399,7 @@ export default function IdeationGame() {
           {/*<p>Group ID: {groupId || localStorage.getItem("groupId")}</p>*/}
           <p>Label: {userLabel || localStorage.getItem("userLabel")}</p>
         </div>
-        <h2>Add a New Idea</h2>
+        <h2>Add a New Idea or Build on Another User's</h2>
 
         <div className="input-group">
           <label>Conjunctive Phrase</label>
