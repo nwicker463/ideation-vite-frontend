@@ -12,11 +12,15 @@ export default function WaitingRoom() {
   const navigatedRef = useRef(false);
   const intervalRef = useRef(null);
 
+  console.log("WaitingRoom loaded. userId:", localStorage.getItem("userId"));
+
+
   // On first mount, generate a new ID *only if one does not already exist*
   useEffect(() => {
     if (!userId) {
       const prolificId = new URLSearchParams(window.location.search).get("PROLIFIC_PID");
       const idToUse = prolificId || uuidv4();
+      console.log("Sending to waiting:", import.meta.env.VITE_API_URL, userId);
       //localStorage.setItem("userId", idToUse);
       setUserId(idToUse);
       // Post to backend waiting list once
