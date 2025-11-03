@@ -1,87 +1,76 @@
-// WaitingRoom.jsx
 import { v4 as uuidv4 } from "uuid";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function WaitingRoom() {
   const navigate = useNavigate();
-  const [userId, setUserId] = useState(() => localStorage.getItem("userId") || null);
-  const navigatedRef = useRef(false);      // prevents repeat navigation
-  const intervalRef = useRef(null);
 
-  // 1) generate userId only if missing
+  const [userId, setUserId] = useState(() => localStorage.getItem("userId") || null);
+  const [groupId, setGroupId] = useState(null);
+  const [userLabel, setUserLabel] = useState(null);
+
+  // 1) Generate / load userId once
   useEffect(() => {
     if (!userId) {
       const prolificId = new URLSearchParams(window.location.search).get("PROLIFIC_PID");
-      const idToUse = prolificId || uuidv4();
-      localStorage.setItem("userId", idToUse);
-      setUserId(idToUse);
-      console.log("Generated userId:", idToUse);
+      const newId = prolificId || uuidv4();
+      localStorage.setItem("userId", newId);
+      setUserId(newId);
+      console.log("✅ Generated new userId:", newId);
     }
   }, [userId]);
 
-  // 2) register user once userId exists
+  // 2) Post to waiting list *only after* userId exists
   useEffect(() => {
     if (!userId) return;
-    console.log("Posting to waiting:", userId);
+
+    console.log("➡️ Posting user to waiting list:", userId);
 
     fetch(`${import.meta.env.VITE_API_URL}/api/waiting`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId })
-    }).catch(err => console.error("Register failed:", err));
-  }, [userId]);
+    }).catch(err => console.error("Failed to register in waiting list:", err));
 
-  // 3) poll for assignment and navigate exactly once
+  }, [userId]); // <- only runs *after* userId is set
+
+  // 3) Poll for group assignment
   useEffect(() => {
     if (!userId) return;
 
-    const checkAssignment = async () => {
-      try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`);
-        if (!res.ok) {
-          // don't navigate on 404/500; just log and retry
-          console.warn("Waiting GET failed:", res.status);
-          return;
-        }
-        const data = await res.json();
-        console.log("Polling result:", data);
+    const interval = setInterval(() => {
+      fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
+        .then(res => res.json())
+        .then(data => {
+          console.log("👀 Polling result:", data);
 
-        if (!navigatedRef.current && data?.groupId && data?.label) {
-          navigatedRef.current = true;
+          if (data.groupId && data.label) {
+            setGroupId(data.groupId);
+            setUserLabel(data.label);
 
-          // persist before navigating
-          localStorage.setItem("groupId", data.groupId);
-          localStorage.setItem("userLabel", data.label);
-          localStorage.setItem("userId", userId);
-
-          // stop polling immediately
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
+            localStorage.setItem("groupId", data.groupId);
+            localStorage.setItem("userLabel", data.label);
+            console.log("Navigating to App")
+            navigate("/app");
           }
+        })
+        .catch(err => console.error("Error polling group assignment:", err));
 
-          // navigate once, replace so back button won't bounce
-          navigate("/app", { replace: true });
-        }
-      } catch (err) {
-        console.error("Polling error:", err);
-      }
-    };
+      // send heartbeat
+      fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}/heartbeat`, {
+        method: "POST"
+      });
 
-    // run immediately then poll
-    checkAssignment();
-    intervalRef.current = setInterval(checkAssignment, 2000);
+    }, 2000);
 
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
+    return () => clearInterval(interval);
   }, [userId, navigate]);
 
   return (
     <div className="p-6">
-      <h2>Waiting for participants...</h2>
-      <p>Do not reload this page.</p>
+      <h2 className="text-xl font-bold mb-4">Waiting for other participants...</h2>
+      <p>You will be assigned to a group shortly.</p>
+      <p>Do not refresh this page.</p>
     </div>
   );
 }
