@@ -1,130 +1,76 @@
 import { v4 as uuidv4 } from "uuid";
-import { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function WaitingRoom() {
-  const [groupId, setGroupId] = useState(null);
   const navigate = useNavigate();
-  const [isWaiting, setIsWaiting] = useState(true);
-  const [locked, setLocked] = useState(false);
+
+  const [userId, setUserId] = useState(() => localStorage.getItem("userId") || null);
+  const [groupId, setGroupId] = useState(null);
   const [userLabel, setUserLabel] = useState(null);
-  const [userId, setUserId] = useState(() => null);
-  const navigatedRef = useRef(false);
-  const intervalRef = useRef(null);
 
-  console.log("WaitingRoom loaded. userId:", localStorage.getItem("userId"));
-
-
-  // On first mount, generate a new ID *only if one does not already exist*
+  // 1) Generate / load userId once
   useEffect(() => {
     if (!userId) {
       const prolificId = new URLSearchParams(window.location.search).get("PROLIFIC_PID");
-      const idToUse = prolificId || uuidv4();
-      console.log("Sending to waiting:", import.meta.env.VITE_API_URL, userId);
-      //localStorage.setItem("userId", idToUse);
-      setUserId(idToUse);
-      // Post to backend waiting list once
-      fetch(`${import.meta.env.VITE_API_URL}/api/waiting`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: idToUse }),
-      }).catch(err => console.error("Failed to register user in waiting list:", err));
+      const newId = prolificId || uuidv4();
+      localStorage.setItem("userId", newId);
+      setUserId(newId);
+      console.log("✅ Generated new userId:", newId);
     }
   }, [userId]);
 
-  // Logging and sending user to App
-  /*useEffect(() => {
-    let navigated = false;
+  // 2) Post to waiting list *only after* userId exists
+  useEffect(() => {
+    if (!userId) return;
+
+    console.log("➡️ Posting user to waiting list:", userId);
+
+    fetch(`${import.meta.env.VITE_API_URL}/api/waiting`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId })
+    }).catch(err => console.error("Failed to register in waiting list:", err));
+
+  }, [userId]); // <- only runs *after* userId is set
+
+  // 3) Poll for group assignment
+  useEffect(() => {
     if (!userId) return;
 
     const interval = setInterval(() => {
       fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
         .then(res => res.json())
         .then(data => {
-          console.log("Polling data:", data); // should show { groupId: "...", label: "User A", ... }
+          console.log("👀 Polling result:", data);
 
-
-          if (!navigated && data.groupId && data.label) {
+          if (data.groupId && data.label) {
             setGroupId(data.groupId);
             setUserLabel(data.label);
-            setLocked(true);
-
-
-            console.log("Saving to localStorage:");
-            console.log("userId:", userId);
-            console.log("groupId:", data.groupId);
-            console.log("userLabel:", data.label);
-
 
             localStorage.setItem("groupId", data.groupId);
-            localStorage.setItem("userId", userId);
             localStorage.setItem("userLabel", data.label);
 
-
-            navigated = true;
             navigate("/app");
           }
         })
-        .catch(err => console.error("Error fetching group ID:", err));
+        .catch(err => console.error("Error polling group assignment:", err));
 
-
+      // send heartbeat
       fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}/heartbeat`, {
         method: "POST"
       });
 
-
     }, 2000);
 
-
     return () => clearInterval(interval);
-  }, [userId]);*/
-  useEffect(() => {
-    if (!userId) return;
-
-    // initial check + polling
-    const checkAssignment = async () => {
-      try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`);
-        if (!res.ok) return; // optionally handle 404/500
-        const data = await res.json();
-
-        // Only navigate once, when groupId + label are present
-        if (!navigatedRef.current && data?.groupId && data?.label) {
-          navigatedRef.current = true;       // mark we've navigated
-          // persist before navigation
-          localStorage.setItem("groupId", data.groupId);
-          localStorage.setItem("userLabel", data.label);
-          localStorage.setItem("userId", userId);
-
-          // clear poll immediately
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-          }
-
-          // use replace so back button doesn't bounce
-          navigate("/app", { replace: true });
-        }
-      } catch (err) {
-        console.error("Error fetching group assignment:", err);
-      }
-    };
-
-    // run immediately, then poll
-    checkAssignment();
-    intervalRef.current = setInterval(checkAssignment, 2000);
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
   }, [userId, navigate]);
 
   return (
     <div className="p-6">
       <h2 className="text-xl font-bold mb-4">Waiting for other participants...</h2>
-      <p>You will be assigned to a group as soon as 2 more users join.</p>
-      <p></p>
-      <p>Please do not reload this page.</p>
+      <p>You will be assigned to a group shortly.</p>
+      <p>Do not refresh this page.</p>
     </div>
   );
 }
