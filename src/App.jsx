@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,10 +29,28 @@ export default function IdeationGame() {
   const [groupId, setGroupId] = useState(() => localStorage.getItem("groupId")); //CHECK1
   const [userLabel, setUserLabel] = useState(() => localStorage.getItem("userLabel"));
   const [timeLeft, setTimeLeft] = useState(null);
+  const navigate = useNavigate();
+  const initializedRef = useRef(false);
 
   console.log("userId:", userId);
   console.log("groupId:", groupId);
   console.log("userLabel:", userLabel);
+
+  //Making App tolerant and not autodirecting
+  useEffect(() => {
+    if (initializedRef.current) return;
+    initializedRef.current = true;
+
+    console.log("App mount: rehydrate", { groupId, userId, userLabel });
+
+    // If critical values are missing, show a message rather than continuously redirecting.
+    if (!groupId || !userId) {
+      console.warn("Missing groupId or userId - do not auto-navigate. Ask the user to re-join if needed.");
+      // Optionally display a UI asking them to rejoin. Do NOT call navigate in a tight loop.
+    } else {
+      // normal initialization (fetch ideas, start timer, etc.)
+    }
+  }, []); // run only once
 
   //logging groupId
   useEffect(() => {
