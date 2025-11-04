@@ -38,7 +38,7 @@ export default function WaitingRoom() {
 
     const checkAssignment = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}/heartbeat`);
         if (!res.ok) {
           // don't navigate on 404/500; just log and retry
           console.warn("Waiting GET failed:", res.status);
