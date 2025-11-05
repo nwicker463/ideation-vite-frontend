@@ -40,17 +40,17 @@ export default function IdeationGame() {
   useEffect(() => {
     if (initializedRef.current) return;
     initializedRef.current = true;
-
     console.log("App mount: rehydrate", { groupId, userId, userLabel });
 
-    // If critical values are missing, show a message rather than continuously redirecting.
+    // if missing required values, show friendly message instead of redirect
     if (!groupId || !userId) {
-      console.warn("Missing groupId or userId - do not auto-navigate. Ask the user to re-join if needed.");
-      // Optionally display a UI asking them to rejoin. Do NOT call navigate in a tight loop.
-    } else {
-      // normal initialization (fetch ideas, start timer, etc.)
+      console.warn("Missing groupId or userId — staying on App but showing message.");
+      // show UI message / disable inputs, but DO NOT call navigate() here
+      return;
     }
-  }, []); // run only once
+
+    // else continue normal initialization (start timer, fetch ideas, etc.)
+  }, []); // run once
 
   //logging groupId
   useEffect(() => {
