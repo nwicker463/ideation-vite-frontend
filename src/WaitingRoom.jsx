@@ -37,6 +37,9 @@ export default function WaitingRoom() {
     if (!userId) return;
 
     const checkAssignment = async () => {
+      fetch(`${import.meta.env.VITE_API_URL}/api/waiting/check-group`, {
+        method: "POST"
+      });
       try {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`);
         if (!res.ok) {
