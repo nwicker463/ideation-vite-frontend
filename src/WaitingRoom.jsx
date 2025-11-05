@@ -64,14 +64,14 @@ export default function WaitingRoom() {
           // navigate once, replace so back button won't bounce
           navigate("/app", { replace: true });
         }
-        fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}/heartbeat`, {
-          method: "POST",
-        }).catch((err) => console.error("Heartbeat failed:", err));
       } catch (err) {
         console.error("Polling error:", err);
       }
     };
 
+    fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}/heartbeat`, {
+      method: "POST",
+    }).catch((err) => console.error("Heartbeat failed:", err));
     // run immediately then poll
     checkAssignment();
     intervalRef.current = setInterval(checkAssignment, 10000);
