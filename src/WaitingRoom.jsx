@@ -65,6 +65,7 @@ export default function WaitingRoom() {
           }
 
           // navigate once, replace so back button won't bounce
+          console.log("NAVIGATE called:", "/app", new Date().toISOString(), "from", /* component name */);
           navigate("/app", { replace: true });
         }
         fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}/heartbeat`, {
