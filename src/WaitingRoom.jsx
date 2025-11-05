@@ -68,12 +68,12 @@ export default function WaitingRoom() {
           console.log("NAVIGATE called:", "/app", new Date().toISOString(), "from", /* component name */);
           navigate("/app", { replace: true });
         }
-        fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}/heartbeat`, {
-          method: "POST",
-        }).catch((err) => console.error("Heartbeat failed:", err));
       } catch (err) {
         console.error("Polling error:", err);
       }
+      fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}/heartbeat`, {
+        method: "POST",
+      }).catch((err) => console.error("Heartbeat failed:", err));
     };
 
     // run immediately then poll
