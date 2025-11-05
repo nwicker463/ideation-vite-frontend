@@ -78,7 +78,7 @@ export default function WaitingRoom() {
 
     // run immediately then poll
     checkAssignment();
-    intervalRef.current = setInterval(checkAssignment, 5000);
+    intervalRef.current = setInterval(checkAssignment, 1000);
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
