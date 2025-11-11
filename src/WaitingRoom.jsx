@@ -37,40 +37,19 @@ export default function WaitingRoom() {
     if (!userId) return;
 
     const checkAssignment = async () => {
-      fetch(`${import.meta.env.VITE_API_URL}/api/waiting/check-group`, {
+      /*fetch(`${import.meta.env.VITE_API_URL}/api/waiting/check-group`, {
         method: "POST"
-      });
-      try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`);
-        if (!res.ok) {
-          // don't navigate on 404/500; just log and retry
-          console.warn("Waiting GET failed:", res.status);
-          return;
-        }
-        const data = await res.json();
-        console.log("Polling result:", data);
-
-        if (!navigatedRef.current && data?.groupId && data?.label) {
-          navigatedRef.current = true;
-
-          // persist before navigating
-          localStorage.setItem("groupId", data.groupId);
-          localStorage.setItem("userLabel", data.label);
-          localStorage.setItem("userId", userId);
-
-          // stop polling immediately
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
+      });*/
+      fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.groupId && data.label) {
+            localStorage.setItem("groupId", data.groupId);
+            localStorage.setItem("userId", userId);
+            localStorage.setItem("userLabel", data.label);
+            navigate("/app");
           }
-
-          // navigate once, replace so back button won't bounce
-          console.log("NAVIGATE called:", "/app", new Date().toISOString(), "from", /* component name */);
-          navigate("/app", { replace: true });
-        }
-      } catch (err) {
-        console.error("Polling error:", err);
-      }
+        });
       /*fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}/heartbeat`, {
         method: "POST",
       }).catch((err) => console.error("Heartbeat failed:", err));*/
