@@ -43,6 +43,7 @@ export default function WaitingRoom() {
       fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
         .then(res => res.json())
         .then(data => {
+          console.log("Poll result:", data);
           if (data.groupId && data.label) {
             localStorage.setItem("groupId", data.groupId);
             localStorage.setItem("userId", userId);
@@ -60,7 +61,7 @@ export default function WaitingRoom() {
     intervalRef.current = setInterval(checkAssignment, 1000);
 
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      /*if (intervalRef.current) */clearInterval(intervalRef.current);
     };
   }, [userId, navigate]);
 
