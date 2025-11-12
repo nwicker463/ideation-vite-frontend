@@ -5,65 +5,54 @@ import { useNavigate } from "react-router-dom";
 
 export default function WaitingRoom() {
   const navigate = useNavigate();
-  const [user_id, setUserId] = useState(() => localStorage.getItem("user_id") || null);
+  const [userId, setUserId] = useState(() => localStorage.getItem("userId") || null);
   const navigatedRef = useRef(false);      // prevents repeat navigation
   const intervalRef = useRef(null);
 
-  // 1) generate user_id only if missing
+  // 1) generate userId only if missing
   useEffect(() => {
-    if (!user_id) {
+    if (!userId) {
       const prolificId = new URLSearchParams(window.location.search).get("PROLIFIC_PID");
       const idToUse = prolificId || uuidv4();
-      localStorage.setItem("user_id", idToUse);
+      localStorage.setItem("userId", idToUse);
       setUserId(idToUse);
-      console.log("Generated user_id:", idToUse);
+      console.log("Generated userId:", idToUse);
     }
-  }, [user_id]);
+  }, [userId]);
 
-  // 2) register user once user_id exists
+  // 2) register user once userId exists
   useEffect(() => {
-    if (!user_id) return;
-    console.log("Posting to waiting:", user_id);
+    if (!userId) return;
+    console.log("Posting to waiting:", userId);
 
     fetch(`${import.meta.env.VITE_API_URL}/api/waiting`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id })
+      body: JSON.stringify({ userId })
     }).catch(err => console.error("Register failed:", err));
-  }, [user_id]);
+  }, [userId]);
 
   // 3) poll for assignment and navigate exactly once
   useEffect(() => {
-    if (!user_id) return;
+    if (!userId) return;
 
-    const checkAssignment = async () => {
-      /*fetch(`${import.meta.env.VITE_API_URL}/api/waiting/check-group`, {
-        method: "POST"
-      });*/
-      fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${user_id}`)
+    const interval = setInterval(() => {
+      fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}`)
         .then(res => res.json())
         .then(data => {
-          console.log("Poll result:", data);
-          if (data.groupId && data.label) {
-            localStorage.setItem("groupId", data.groupId);
-            localStorage.setItem("user_id", user_id);
+          console.log("Polling result:", data);
+          if (data.group_id && data.label) {
+            localStorage.setItem("groupId", data.group_id);
+            localStorage.setItem("userId", userId);
             localStorage.setItem("userLabel", data.label);
             navigate("/app");
           }
-        });
-      /*fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${user_id}/heartbeat`, {
-        method: "POST",
-      }).catch((err) => console.error("Heartbeat failed:", err));*/
-    };
+        })
+        .catch(err => console.error("Polling error:", err));
+    }, 2000);
 
-    // run immediately then poll
-    checkAssignment();
-    intervalRef.current = setInterval(checkAssignment, 1000);
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [user_id, navigate]);
+    return () => clearInterval(interval);
+  }, [userId, navigate]);
 
   return (
     <div className="p-6">
