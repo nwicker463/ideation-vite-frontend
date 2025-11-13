@@ -45,6 +45,7 @@ export default function WaitingRoom() {
             localStorage.setItem("groupId", data.group_id);
             localStorage.setItem("userId", userId);
             localStorage.setItem("userLabel", data.label);
+            console.log("NAVIGATE -> /app from WaitingRoom", new Date().toISOString(), { userId, groupId, userLabel });
             navigate("/app");
           }
         })
