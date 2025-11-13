@@ -7,7 +7,7 @@ import Summary from './Summary.jsx';
 import WaitingRoom from './WaitingRoom';
 import './index.css';
 
-const ProtectedApp = () => {
+/*const ProtectedApp = () => {
   const username = localStorage.getItem('username');
   const groupId = localStorage.getItem('groupId');
 
@@ -16,7 +16,7 @@ const ProtectedApp = () => {
   }
 
   return <App />;
-};
+};*/
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -24,7 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<WaitingRoom />} />
         {/*<Route path="/login" element={<Login />} />*/}
-        <Route path="/app" element={<ProtectedApp />} />
+        <Route path="/app" element={</*Protected*/App />} />
         <Route path="/summary" element={<Summary />} />
         <Route path="*" element={<Navigate to="/app" />} />
       </Routes>
