@@ -30,15 +30,15 @@ export default function IdeationGame() {
   const [userLabel, setUserLabel] = useState(() => localStorage.getItem("userLabel"));
   const [timeLeft, setTimeLeft] = useState(null);
 
-  console.log("userId:", userId);
+  /*console.log("userId:", userId);
   console.log("groupId:", groupId);
-  console.log("userLabel:", userLabel);
+  console.log("userLabel:", userLabel);*/
 
   //logging groupId
-  useEffect(() => {
+  /*useEffect(() => {
     console.log("groupId state after render:", groupId);
     console.log("groupId in localStorage after render:", localStorage.getItem("groupId"));
-  }, [groupId]);
+  }, [groupId]);*/
 
   // Setting time left
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function IdeationGame() {
     const saved = localStorage.getItem('groupId');
     if (saved) {
       setGroupId(Number(saved)); //CHECK2
-      console.log("groupId 2:", groupId);
+      /*console.log("groupId 2:", groupId);*/
     }
   }, []);
 
@@ -208,7 +208,7 @@ export default function IdeationGame() {
       .then(res => res.json())
       .then(data => {
         setGroupId(data.group_id); //CHECK3
-        console.log("groupId 3:", groupId);
+        /*console.log("groupId 3:", groupId);*/
         setUserLabel(data.label);
         localStorage.setItem("userLabel", data.label);
       });
@@ -288,7 +288,7 @@ export default function IdeationGame() {
   useEffect(() => {
     if (!userId) setUserId(localStorage.getItem("userId"));
     if (!groupId) setGroupId(localStorage.getItem("groupId")); //CHECK4
-    console.log("groupId 4:", groupId);
+    /*console.log("groupId 4:", groupId);*/
     if (!userLabel) setUserLabel(localStorage.getItem("userLabel"));
   }, []);
 
