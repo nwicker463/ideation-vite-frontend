@@ -16,6 +16,7 @@ const conjunctivePhrases = [
 ];
 
 export default function IdeationGame() {
+  console.log("AppPage: render start", { time: new Date().toISOString() });
   const [ideas, setIdeas] = useState([]);
   const [parentId, setParentId] = useState(null);
   const [content, setContent] = useState('');
@@ -32,9 +33,18 @@ export default function IdeationGame() {
   const navigate = useNavigate();
   const initializedRef = useRef(false);
 
-  console.log("userId:", userId);
-  console.log("groupId:", groupId);
-  console.log("userLabel:", userLabel);
+  //Logging the mount
+  useEffect(() => {
+    console.log("AppPage: useEffect mount", { time: new Date().toISOString() });
+    // optionally log localStorage keys used by App
+    console.log("AppPage: localStorage", {
+      groupId: localStorage.getItem("groupId"),
+      userId: localStorage.getItem("userId"),
+      userLabel: localStorage.getItem("userLabel")
+    });
+
+    return () => console.log("AppPage: unmount");
+  }, []);
 
   //Making App tolerant and not autodirecting
   useEffect(() => {
