@@ -64,7 +64,7 @@ export default function WaitingRoom() {
           }
         })
         .catch(err => console.error("Polling error:", err));
-    }, 2000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [userId, navigate]);
