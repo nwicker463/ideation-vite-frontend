@@ -287,7 +287,7 @@ export default function IdeationGame() {
   // Resync states if they are null
   useEffect(() => {
     if (!userId) setUserId(localStorage.getItem("userId"));
-    if (!groupId) setGroupId(localStorage.getItem("groupId")); //CHECK4
+    if (!groupId) setGroupId(localStorage.getItem("groupId")); //CHECK4a
     /*console.log("groupId 4:", groupId);*/
     if (!userLabel) setUserLabel(localStorage.getItem("userLabel"));
   }, []);
