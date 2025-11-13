@@ -41,7 +41,8 @@ export default function WaitingRoom() {
         .then(res => res.json())
         .then(data => {
           console.log("Polling result:", data);
-          if (data.group_id && data.label) {
+          if (!navigatedRef.current && data.group_id && data.label) {
+            navigatedRef.current = true
             const groupId = data.group_id || data.groupId;
             const userLabel = data.label || data.userLabel;
 
@@ -54,6 +55,11 @@ export default function WaitingRoom() {
             localStorage.setItem("groupId", data.group_id);
             localStorage.setItem("userId", userId);
             localStorage.setItem("userLabel", data.label);
+            if (intervalRef.current) {
+              clearInterval(intervalRef.current);
+              intervalRef.current = null;
+            }
+            clearInterval(interval);
             navigate("/app", { replace: true });
           }
         })
