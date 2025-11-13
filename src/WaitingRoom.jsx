@@ -42,10 +42,18 @@ export default function WaitingRoom() {
         .then(data => {
           console.log("Polling result:", data);
           if (data.group_id && data.label) {
+            const groupId = data.group_id || data.groupId;
+            const userLabel = data.label || data.userLabel;
+
+            console.log("NAVIGATE -> /app from WaitingRoom", new Date().toISOString(), {
+              userId,
+              groupId,
+              userLabel,
+            });
+            
             localStorage.setItem("groupId", data.group_id);
             localStorage.setItem("userId", userId);
             localStorage.setItem("userLabel", data.label);
-            console.log("NAVIGATE -> /app from WaitingRoom", new Date().toISOString(), { userId, groupId, userLabel });
             navigate("/app");
           }
         })
