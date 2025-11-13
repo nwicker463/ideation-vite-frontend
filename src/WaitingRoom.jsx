@@ -50,11 +50,11 @@ export default function WaitingRoom() {
               groupId,
               userLabel,
             });
-            
+
             localStorage.setItem("groupId", data.group_id);
             localStorage.setItem("userId", userId);
             localStorage.setItem("userLabel", data.label);
-            navigate("/app");
+            navigate("/app", { replace: true });
           }
         })
         .catch(err => console.error("Polling error:", err));
