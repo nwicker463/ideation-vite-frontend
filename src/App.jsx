@@ -214,11 +214,11 @@ export default function IdeationGame() {
       });
   }, [userId]);
 
-  const [messages, setMessages] = useState([]);
+  /*const [messages, setMessages] = useState([]);*/
   const [chatInput, setChatInput] = useState('');
 
   // Poll messages every 3s
-  useEffect(() => {
+  /*useEffect(() => {
     if (!groupId) return;
     const fetchMessages = () =>
       fetch(`${import.meta.env.VITE_API_URL}/api/messages/group/${groupId}`)
@@ -250,7 +250,7 @@ export default function IdeationGame() {
       }),
     });
     setChatInput('');
-  };
+  };*/
 
 
   // Countdown logic
@@ -421,25 +421,7 @@ export default function IdeationGame() {
         </Button>
       </div>
 
-      <div className="chat-box">
-        <h2>Group Chat</h2>
-        <div className="chat-input-group">
-          {Array.isArray(messages) &&
-            messages.map(msg => (
-              <p key={msg.id}>
-                <strong>{msg.contributor_label}:</strong> {msg.content}
-              </p>
-            ))}
-
-        </div>
-          <textarea
-            value={chatInput}
-            onChange={e => setChatInput(e.target.value)}
-            placeholder="Type a message..."
-            className="idea-textarea"
-          />
-          <button onClick={sendMessage} className={'unselected-button'}>Send</button>
-        </div>
+      
       </div>
     </div>
   );
