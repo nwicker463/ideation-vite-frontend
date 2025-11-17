@@ -133,13 +133,20 @@ export default function IdeationGame() {
       userId
     });
 
+    console.log()
+
     const res = await fetch(`${import.meta.env.VITE_API_URL}/api/ideas/group/${currentGroupId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        content: contentToSubmit,
+        /*content: contentToSubmit,
         parentId,
-        userId: currentUserId
+        userId: currentUserId*/
+        content: contentToSubmit,
+        parent_id: parentId,
+        group_id: currentGroupId,
+        contributor_label: currentUserLabel,
+        user_id: currentUserId,
       })
     });
 
