@@ -41,24 +41,24 @@ export default function WaitingRoom() {
 
 
           if (!navigated && data.group_id && data.label) {
-            /*setGroupId(data.groupId);
+            setGroupId(data.group_id);
             setUserLabel(data.label);
             setLocked(true);
 
-            */
-            console.log("Saving to localStorage:");/*
+          
+            console.log("Saving to localStorage:");
             console.log("userId:", userId);
-            console.log("groupId:", data.groupId);
+            console.log("groupId:", data.group_id);
             console.log("userLabel:", data.label);
 
 
-            localStorage.setItem("groupId", data.groupId);
+            localStorage.setItem("groupId", data.group_id);
             localStorage.setItem("userId", userId);
             localStorage.setItem("userLabel", data.label);
 
 
             navigated = true;
-            navigate("/app");*/
+            navigate("/app");
           }
         })
         .catch(err => console.error("Error fetching group ID:", err));
