@@ -64,9 +64,9 @@ export default function WaitingRoom() {
         .catch(err => console.error("Error fetching group ID:", err));
 
 
-      fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}/heartbeat`, {
+      /*fetch(`${import.meta.env.VITE_API_URL}/api/waiting/${userId}/heartbeat`, {
         method: "POST"
-      });
+      });*/
 
 
     }, 2000);
