@@ -127,11 +127,11 @@ export default function IdeationGame() {
     }
 
     console.log('Submitting idea:', {
-      content,
+      contentToSubmit,
       parentId,
-      groupId,
-      userId,
-      userLabel
+      currentGroupId,
+      currentUserId,
+      currentUserLabel
     });
 
     console.log()
