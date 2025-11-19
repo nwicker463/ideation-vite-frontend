@@ -130,7 +130,8 @@ export default function IdeationGame() {
       content,
       parentId,
       groupId,
-      userId
+      userId,
+      userLabel
     });
 
     console.log()
