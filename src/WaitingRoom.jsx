@@ -40,13 +40,13 @@ export default function WaitingRoom() {
           console.log("Polling data:", data); // should show { groupId: "...", label: "User A", ... }
 
 
-          if (!navigated && data.groupId /*&& data.label*/) {
-            setGroupId(data.groupId);
+          if (!navigated && data.group_id && data.label) {
+            /*setGroupId(data.groupId);
             setUserLabel(data.label);
             setLocked(true);
 
-
-            console.log("Saving to localStorage:");
+            */
+            console.log("Saving to localStorage:");/*
             console.log("userId:", userId);
             console.log("groupId:", data.groupId);
             console.log("userLabel:", data.label);
@@ -58,7 +58,7 @@ export default function WaitingRoom() {
 
 
             navigated = true;
-            navigate("/app");
+            navigate("/app");*/
           }
         })
         .catch(err => console.error("Error fetching group ID:", err));
