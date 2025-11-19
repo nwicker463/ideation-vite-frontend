@@ -40,7 +40,7 @@ export default function WaitingRoom() {
           console.log("Polling data:", data); // should show { groupId: "...", label: "User A", ... }
 
 
-          if (!navigated && data.groupId && data.label) {
+          if (!navigated && data.groupId /*&& data.label*/) {
             setGroupId(data.groupId);
             setUserLabel(data.label);
             setLocked(true);
