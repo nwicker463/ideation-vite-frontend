@@ -3,20 +3,21 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function WaitingRoom() {
-  //const [userId, setLocalUserId] = useState(null);
   const [groupId, setGroupId] = useState(null);
   const navigate = useNavigate();
   const [isWaiting, setIsWaiting] = useState(true);
   const [locked, setLocked] = useState(false);
   const [userLabel, setUserLabel] = useState(null);
-  //const [userId, setUserId] = useState(() => localStorage.getItem("userId") || null);
   const [userId, setUserId] = useState(() => null);
+
+  //const params = new URLSearchParams(window.location.search);
+  //const prolificId = params.get("prolific_id") || null;
 
   // On first mount, generate a new ID *only if one does not already exist*
   useEffect(() => {
     if (!userId) {
-      const prolificId = new URLSearchParams(window.location.search).get("PROLIFIC_PID");
-      const idToUse = prolificId || uuidv4();
+      const params = new URLSearchParams(window.location.search).get("prolific_id");
+      const idToUse = params || uuidv4();
       //localStorage.setItem("userId", idToUse);
       setUserId(idToUse);
       // Post to backend waiting list once
