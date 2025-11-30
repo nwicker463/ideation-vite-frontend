@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import './App.css';
 import { Link } from 'react-router-dom';
+import ChatColumn from "./ChatColumn";
 
 const conjunctivePhrases = [
   '',
