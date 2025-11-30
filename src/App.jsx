@@ -370,10 +370,10 @@ export default function IdeationGame() {
     <h1>Ideation Game</h1>
     {/*<Link to="/summary">View Summary</Link>*/}
     <h2>Here is where the paragraph with the prompt will be. Ex: You are tasked with finding a use for a house on campus. Blah Blah Blah. etc etc etc.</h2>
-    <div>
+    {/*<div>
       Time left: {Math.floor(timeLeft / 1000 / 60)}:
                 {(Math.floor(timeLeft / 1000) % 60).toString().padStart(2, '0')}
-    </div>
+    </div>*/}
     <div className="text-center mt-6">
       {timeLeft > 0 ? (
         <p className="text-lg font-bold">
@@ -429,6 +429,12 @@ export default function IdeationGame() {
         </Button>
       </div>
 
+      <div>
+        <ChatColumn
+          currentGroupId={currentGroupId}
+          currentUserId={currentUserId}
+        />
+      </div>
       
       </div>
     </div>
