@@ -434,6 +434,7 @@ export default function IdeationGame() {
         <ChatColumn
           currentGroupId={groupId}
           currentUserId={userId}
+          currentUserLabel={userLabel}
         />
       </div>
       

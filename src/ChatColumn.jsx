@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function ChatColumn({ currentGroupId, currentUserId }) {
+export default function ChatColumn({ currentGroupId, currentUserId, currentUserLabel }) {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
 
@@ -30,6 +30,7 @@ export default function ChatColumn({ currentGroupId, currentUserId }) {
     const body = {
       userId: currentUserId,
       message: text,
+      contributorLabel: currentUserLabel,
     };
 
     try {
