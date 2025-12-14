@@ -29,7 +29,7 @@ export default function ChatColumn({ currentGroupId, currentUserId }) {
 
     const body = {
       userId: currentUserId,
-      content: text,
+      message: text,
     };
 
     try {
