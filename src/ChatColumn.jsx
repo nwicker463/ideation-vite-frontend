@@ -72,7 +72,7 @@ export default function ChatColumn({ currentGroupId, currentUserId, currentUserL
       }}>
         {messages.map((m) => (
           <div key={m.id} style={{ marginBottom: "8px" }}>
-            <strong>{m.contributor_label || "User"}:</strong> {m.content}
+            <strong>{m.contributor_label || "User"}:</strong> {m.message}
           </div>
         ))}
       </div>
