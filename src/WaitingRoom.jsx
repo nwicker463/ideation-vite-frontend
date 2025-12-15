@@ -69,26 +69,30 @@ export default function WaitingRoom() {
         method: "POST"
       });
 
-      try {
-          const result = db.query(`
-            DELETE FROM waiting_users
-            WHERE last_heartbeat < NOW() - INTERVAL '30 seconds'
-              AND group_id IS NULL
-            RETURNING user_id
-          `);
-
-          if (result.rows.length > 0) {
-            console.log('🧹 Removed inactive users:', result.rows.map(r => r.user_id));
-          }
-        } catch (err) {
-          console.error('Heartbeat cleanup failed:', err);
-        }
 
     }, 2000);
 
 
     return () => clearInterval(interval);
   }, [userId]);
+
+  setInterval(async () => {
+    try {
+      const result = await db.query(`
+        DELETE FROM waiting_users
+        WHERE last_heartbeat < NOW() - INTERVAL '30 seconds'
+          AND group_id IS NULL
+        RETURNING user_id
+      `);
+
+      if (result.rows.length > 0) {
+        console.log('🧹 Removed inactive users:', result.rows.map(r => r.user_id));
+      }
+    } catch (err) {
+      console.error('Heartbeat cleanup failed:', err);
+    }
+  }, 10000); // run every 10 seconds
+
 
   return (
     <div className="p-6">
