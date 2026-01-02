@@ -8,6 +8,8 @@ export default function ChatColumn({ currentGroupId, currentUserId, currentUserL
   useEffect(() => {
     if (!currentGroupId) return;
     loadMessages();
+    const interval = setInterval(fetchMessages, 2000);
+    return () => clearInterval(interval);
   }, [currentGroupId]);
 
   const loadMessages = async () => {
