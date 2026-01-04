@@ -93,7 +93,7 @@ export default function IdeationGame() {
     fetchIdeas();
 
     // Poll every 5 seconds
-    const interval = setInterval(fetchIdeas, 5000);
+    const interval = setInterval(fetchIdeas, 3000);
 
     // Cleanup on group change or unmount
     return () => clearInterval(interval);
@@ -226,42 +226,6 @@ export default function IdeationGame() {
   /*const [messages, setMessages] = useState([]);*/
   const [chatInput, setChatInput] = useState('');
 
-  // Poll messages every 3s
-  /*useEffect(() => {
-    if (!groupId) return;
-    const fetchMessages = () =>
-      fetch(`${import.meta.env.VITE_API_URL}/api/messages/group/${groupId}`)
-        .then(res => res.json())
-        .then(data => setMessages(Array.isArray(data) ? data : []))
-        .catch(err => {
-          console.error('Chat fetch error:', err);
-          setMessages([]); // keep it an array on error
-        });
-    fetchMessages();
-    const interval = setInterval(fetchMessages, 3000);
-    return () => clearInterval(interval);
-  }, [groupId]);
-
-  // Post chat message
-  const sendMessage = async () => {
-    if (!chatInput.trim() || !groupId) return;
-    const currentGroupId = groupId || localStorage.getItem("groupId");
-    const currentUserId = userId || localStorage.getItem("userId");
-    const currentUserLabel = userLabel || localStorage.getItem("userLabel");
-    console.log({ chatInput, currentUserId, currentUserLabel });
-    await fetch(`${import.meta.env.VITE_API_URL}/api/messages/group/${groupId}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        content: chatInput,
-        userId: currentUserId,
-        username: currentUserLabel
-      }),
-    });
-    setChatInput('');
-  };*/
-
-
   // Countdown logic
     useEffect(() => {
     if (!timerActive) return;
@@ -370,7 +334,12 @@ export default function IdeationGame() {
     <div className="app-container">
     <h1>Ideation Game</h1>
     {/*<Link to="/summary">View Summary</Link>*/}
-    <h2>Here is where the paragraph with the prompt will be. Ex: You are tasked with finding a use for a house on campus. Blah Blah Blah. etc etc etc.</h2>
+    <h2>Your team's task will be to create a future technology. 
+        That is, with your team imagine a technology that will exist in 100 years that solves a major global issue 
+        (e.g., water scarcity, misinformation, urban overcrowding). 
+        Describe how it works, how it changes society, and what unintended consequences it might have.
+        Do your best and try to have fun with this - enter as many and as crazy ideas as you can manage in 10 minutes. 
+        We are interested in ideas that are unique and creative.</h2>
     {/*<div>
       Time left: {Math.floor(timeLeft / 1000 / 60)}:
                 {(Math.floor(timeLeft / 1000) % 60).toString().padStart(2, '0')}
@@ -383,12 +352,12 @@ export default function IdeationGame() {
         </p>
       ) : (
         <a
-          href="https://app.prolific.co/submissions/complete?cc=XXXXXXX"
+          /*href="https://app.prolific.co/submissions/complete?cc=XXXXXXX"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-600 underline font-bold"
+          className="text-blue-600 underline font-bold"*/
         >
-          Continue to Prolific
+          Your Code: XXXXXX
         </a>
       )}
     </div>
@@ -404,8 +373,6 @@ export default function IdeationGame() {
       <div className="idea-form">
         {/*Locked Group Stuff*/}
         <div>
-          {/*<p>User ID: {userId || localStorage.getItem("userId")}</p>*/}
-          {/*<p>Group ID: {groupId || localStorage.getItem("groupId")}</p>*/}
           <p>Label: {userLabel || localStorage.getItem("userLabel")}</p>
         </div>
         <h2>Add a New Idea</h2>
