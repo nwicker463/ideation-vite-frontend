@@ -378,12 +378,12 @@ export default function IdeationGame() {
         <h2>Add a New Idea</h2>
 
         <div className="input-group">
-          <label>Conjunctive Phrase</label>
+          {/*<label>Conjunctive Phrase</label>
           <select value={phrase} onChange={e => setPhrase(e.target.value)}>
             {conjunctivePhrases.map(p => (
               <option key={p} value={p}>{p || '[None]'}</option>
             ))}
-          </select>
+          </select>*/}
           <label>Your Idea</label>
           <textarea
             value={content}
