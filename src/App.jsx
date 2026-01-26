@@ -356,8 +356,9 @@ export default function IdeationGame() {
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 underline font-bold"*/
+          href ="https://app.prolific.com/submissions/complete?cc=CHUUWJ1P"
         >
-          Your Code: XXXXXX
+          Claim Your Reward!
         </a>
       )}
     </div>
@@ -373,7 +374,7 @@ export default function IdeationGame() {
       <div className="idea-form">
         {/*Locked Group Stuff*/}
         <div>
-          <p>Label: {userLabel || localStorage.getItem("userLabel")}</p>
+          <p>Your Label: {userLabel || localStorage.getItem("userLabel")}</p>
         </div>
         <h2>Add a New Idea</h2>
 
@@ -383,8 +384,8 @@ export default function IdeationGame() {
             {conjunctivePhrases.map(p => (
               <option key={p} value={p}>{p || '[None]'}</option>
             ))}
-          </select>*/}
-          <label>Your Idea</label>
+          </select>
+          <label>Your Idea</label>*/}
           <textarea
             value={content}
             onChange={e => setContent(e.target.value)}
